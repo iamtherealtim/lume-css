@@ -1,0 +1,37 @@
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+@media (max-width: 640px) {
+
+  .lume-grid-2,
+  .lume-grid-3,
+  .lume-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .lume-navbar {
+    flex-wrap: wrap;
+    gap: var(--lume-space-3);
+  }
+
+  .lume-card-horizontal {
+    flex-direction: column;
+  }
+
+  .lume-card-horizontal .lume-card-img {
+    width: 100%;
+  }
+
+  .lume-display {
+    font-size: var(--lume-text-4xl);
+  }
+}
+
+@media (max-width: 768px) {
+
+  .lume-grid-3,
+  .lume-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

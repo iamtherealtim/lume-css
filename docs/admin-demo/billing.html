@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.setAttribute('data-ui-init','pending');try{const t=localStorage.getItem('lume-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(_){}</script>
+  <title>Lume Admin — Billing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Lora:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../lume.css" />
+  <link rel="stylesheet" href="admin-demo.css" />
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="admin-shell">
+    <div class="admin-overlay" onclick="closeSidebar()"></div>
+    <aside class="admin-sidebar">
+      <a class="admin-brand" href="dashboard.html"><img class="admin-brand-logo" src="../lume-logo.png" alt="Lume logo" /></a>
+      <div class="admin-nav-group"><div class="admin-nav-title">Overview</div><ul class="admin-nav"><li><a href="dashboard.html"><i data-lucide="layout-dashboard"></i>Dashboard</a></li><li><a href="analytics.html"><i data-lucide="bar-chart-3"></i>Analytics</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">Management</div><ul class="admin-nav"><li><a href="users.html"><i data-lucide="users"></i>Users</a></li><li><a href="orders.html"><i data-lucide="shopping-cart"></i>Orders</a></li><li><a class="is-active" href="billing.html"><i data-lucide="credit-card"></i>Billing</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">Operations</div><ul class="admin-nav"><li><a href="audit-logs.html"><i data-lucide="history"></i>Audit Logs</a></li><li><a href="support-tickets.html"><i data-lucide="life-buoy"></i>Support Tickets</a></li><li><a href="integrations.html"><i data-lucide="plug-zap"></i>Integrations</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">System</div><ul class="admin-nav"><li><a href="settings.html"><i data-lucide="settings"></i>Settings</a></li><li><a href="../lume-docs.html"><i data-lucide="book-open"></i>Library Docs</a></li><li><a href="../lume-showcase.html"><i data-lucide="sparkles"></i>Showcase</a></li></ul></div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <button class="lume-btn lume-btn-outline lume-btn-sm admin-menu-toggle" onclick="toggleSidebar()"><i data-lucide="menu"></i>Menu</button>
+        <div class="admin-topbar-search"><i data-lucide="search"></i><input class="lume-input lume-input-sm" placeholder="Search invoice, card, plan" /></div>
+        <div class="admin-actions"><button class="lume-btn lume-btn-outline lume-btn-sm" data-theme-toggle onclick="toggleTheme()">☾ Dark</button><button class="lume-btn lume-btn-primary lume-btn-sm" onclick="showToast('Invoice generated', 'success')">Generate Invoice</button></div>
+      </header>
+
+      <section class="admin-page">
+        <div class="admin-page-head">
+          <div>
+            <h1 class="admin-page-title">Billing</h1>
+            <p class="admin-page-subtitle">Manage plan tiers, payment methods, and invoice history.</p>
+          </div>
+        </div>
+
+        <div class="admin-three-col" style="margin-bottom: var(--lume-space-6);">
+          <div class="lume-card lume-card-lifted"><div class="lume-card-body"><div class="lume-overline lume-mb-4">Current Plan</div><div class="lume-h3">Business</div><p class="lume-small">$249 / month · 15 seats</p><button class="lume-btn lume-btn-primary lume-btn-sm" style="margin-top:var(--lume-space-4);">Upgrade</button></div></div>
+          <div class="lume-card"><div class="lume-card-body"><div class="lume-overline lume-mb-4">Next Billing Date</div><div class="lume-h3">Mar 01, 2026</div><p class="lume-small">Auto-charge enabled</p></div></div>
+          <div class="lume-card"><div class="lume-card-body"><div class="lume-overline lume-mb-4">Outstanding Balance</div><div class="lume-h3">$0.00</div><p class="lume-small">All invoices paid</p></div></div>
+        </div>
+
+        <div class="admin-two-col" style="margin-bottom: var(--lume-space-6);">
+          <article class="admin-section-card">
+            <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Payment Method</div></div>
+            <div class="admin-section-body lume-stack-4">
+              <div class="lume-callout lume-callout-info"><div class="lume-callout-title">Primary Card</div>Visa ending in 4276 · Expires 11/28</div>
+              <div class="lume-form-group"><label class="lume-label">Cardholder Name</label><input class="lume-input" value="Lume, Inc." /></div>
+              <div class="lume-form-group"><label class="lume-label">Billing Email</label><input class="lume-input" value="billing@lume.dev" /></div>
+              <div class="lume-grid lume-grid-2" style="gap: var(--lume-space-4);">
+                <div class="lume-form-group" style="margin-bottom:0;"><label class="lume-label">Country</label><div class="lume-select-wrapper"><select class="lume-select"><option>United States</option><option>Canada</option></select></div></div>
+                <div class="lume-form-group" style="margin-bottom:0;"><label class="lume-label">ZIP / Postal</label><input class="lume-input" value="94107" /></div>
+              </div>
+              <button class="lume-btn lume-btn-primary" onclick="showToast('Billing details saved', 'success')">Save Billing Details</button>
+            </div>
+          </article>
+
+          <article class="admin-section-card">
+            <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Usage Limits</div></div>
+            <div class="admin-section-body lume-stack-4">
+              <div><div class="lume-flex lume-justify-between lume-mb-2"><span class="lume-small">API Requests</span><span class="lume-small">740k / 1M</span></div><div class="lume-progress"><div class="lume-progress-bar" style="width:74%;"></div></div></div>
+              <div><div class="lume-flex lume-justify-between lume-mb-2"><span class="lume-small">Storage</span><span class="lume-small">88 GB / 120 GB</span></div><div class="lume-progress"><div class="lume-progress-bar lume-progress-bar-warning" style="width:73%;"></div></div></div>
+              <div><div class="lume-flex lume-justify-between lume-mb-2"><span class="lume-small">Team Seats</span><span class="lume-small">11 / 15</span></div><div class="lume-progress"><div class="lume-progress-bar lume-progress-bar-success" style="width:73%;"></div></div></div>
+            </div>
+          </article>
+        </div>
+
+        <article class="admin-section-card">
+          <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Invoice History</div></div>
+          <div class="admin-section-body">
+            <div class="lume-table-wrapper">
+              <table class="lume-table lume-table-hover">
+                <thead><tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th><th class="lume-text-right">Download</th></tr></thead>
+                <tbody>
+                  <tr><td>#INV-2026-021</td><td>Feb 01, 2026</td><td>$249.00</td><td><span class="lume-badge lume-badge-success">Paid</span></td><td class="lume-text-right"><a class="lume-btn lume-btn-ghost lume-btn-sm" href="#">PDF</a></td></tr>
+                  <tr><td>#INV-2026-020</td><td>Jan 01, 2026</td><td>$249.00</td><td><span class="lume-badge lume-badge-success">Paid</span></td><td class="lume-text-right"><a class="lume-btn lume-btn-ghost lume-btn-sm" href="#">PDF</a></td></tr>
+                  <tr><td>#INV-2025-019</td><td>Dec 01, 2025</td><td>$219.00</td><td><span class="lume-badge lume-badge-warning">Adjusted</span></td><td class="lume-text-right"><a class="lume-btn lume-btn-ghost lume-btn-sm" href="#">PDF</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="admin-demo.js"></script>
+</body>
+</html>

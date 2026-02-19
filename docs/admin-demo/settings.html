@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.setAttribute('data-ui-init','pending');try{const t=localStorage.getItem('lume-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(_){}</script>
+  <title>Lume Admin — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Lora:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../lume.css" />
+  <link rel="stylesheet" href="admin-demo.css" />
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="admin-shell">
+    <div class="admin-overlay" onclick="closeSidebar()"></div>
+    <aside class="admin-sidebar">
+      <a class="admin-brand" href="dashboard.html"><img class="admin-brand-logo" src="../lume-logo.png" alt="Lume logo" /></a>
+      <div class="admin-nav-group"><div class="admin-nav-title">Overview</div><ul class="admin-nav"><li><a href="dashboard.html"><i data-lucide="layout-dashboard"></i>Dashboard</a></li><li><a href="analytics.html"><i data-lucide="bar-chart-3"></i>Analytics</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">Management</div><ul class="admin-nav"><li><a href="users.html"><i data-lucide="users"></i>Users</a></li><li><a href="orders.html"><i data-lucide="shopping-cart"></i>Orders</a></li><li><a href="billing.html"><i data-lucide="credit-card"></i>Billing</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">Operations</div><ul class="admin-nav"><li><a href="audit-logs.html"><i data-lucide="history"></i>Audit Logs</a></li><li><a href="support-tickets.html"><i data-lucide="life-buoy"></i>Support Tickets</a></li><li><a href="integrations.html"><i data-lucide="plug-zap"></i>Integrations</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">System</div><ul class="admin-nav"><li><a class="is-active" href="settings.html"><i data-lucide="settings"></i>Settings</a></li><li><a href="../lume-docs.html"><i data-lucide="book-open"></i>Library Docs</a></li><li><a href="../lume-showcase.html"><i data-lucide="sparkles"></i>Showcase</a></li></ul></div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <button class="lume-btn lume-btn-outline lume-btn-sm admin-menu-toggle" onclick="toggleSidebar()"><i data-lucide="menu"></i>Menu</button>
+        <div class="admin-topbar-search"><i data-lucide="search"></i><input class="lume-input lume-input-sm" placeholder="Search settings" /></div>
+        <div class="admin-actions"><button class="lume-btn lume-btn-outline lume-btn-sm" data-theme-toggle onclick="toggleTheme()">☾ Dark</button><button class="lume-btn lume-btn-primary lume-btn-sm" onclick="showToast('Settings saved', 'success')">Save Changes</button></div>
+      </header>
+
+      <section class="admin-page">
+        <div class="admin-page-head">
+          <div>
+            <h1 class="admin-page-title">Settings</h1>
+            <p class="admin-page-subtitle">Configure organization profile, security defaults, API access, and product preferences.</p>
+          </div>
+        </div>
+
+        <div class="admin-two-col">
+          <article class="admin-section-card">
+            <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Organization Profile</div></div>
+            <div class="admin-section-body lume-stack-4">
+              <div class="lume-form-group"><label class="lume-label">Workspace Name</label><input class="lume-input" value="Lume Workspace" /></div>
+              <div class="lume-form-group"><label class="lume-label">Primary Domain</label><div class="lume-input-group"><span class="lume-input-addon">https://</span><input class="lume-input" value="admin.lume.dev" /></div></div>
+              <div class="lume-form-group"><label class="lume-label">Support Email</label><input class="lume-input" value="support@lume.dev" /></div>
+              <div class="lume-form-group" style="margin-bottom:0;"><label class="lume-label">Timezone</label><div class="lume-select-wrapper"><select class="lume-select"><option>UTC -08:00 (Pacific)</option><option>UTC +00:00 (UTC)</option><option>UTC +01:00 (CET)</option></select></div></div>
+            </div>
+          </article>
+
+          <article class="admin-section-card">
+            <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Security Defaults</div></div>
+            <div class="admin-section-body lume-stack-4">
+              <label class="lume-check-group"><input type="checkbox" checked /><span class="lume-check-label">Enforce MFA for all admin users</span></label>
+              <label class="lume-check-group"><input type="checkbox" checked /><span class="lume-check-label">Block sign-ins from new countries</span></label>
+              <label class="lume-check-group"><input type="checkbox" /><span class="lume-check-label">Disable password login (SSO only)</span></label>
+              <label class="lume-check-group"><input type="checkbox" checked /><span class="lume-check-label">Auto-expire inactive sessions after 24h</span></label>
+
+              <div class="lume-callout lume-callout-warning"><div class="lume-callout-title">Security Recommendation</div>Rotate API keys every 90 days and disable unused tokens immediately.</div>
+            </div>
+          </article>
+        </div>
+
+        <article class="admin-section-card" style="margin-top: var(--lume-space-6);">
+          <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">API Keys</div><button class="lume-btn lume-btn-outline-primary lume-btn-sm" onclick="showToast('New API key generated', 'success')">Generate New Key</button></div>
+          <div class="admin-section-body lume-stack-4">
+            <div class="lume-list">
+              <div class="lume-list-item"><span class="lume-list-item-label">Production Key</span><span class="lume-list-item-meta">Created Jan 12, 2026</span></div>
+              <div class="lume-list-item"><span class="lume-list-item-label">Staging Key</span><span class="lume-list-item-meta">Created Dec 04, 2025</span></div>
+            </div>
+            <pre class="lume-pre admin-code">lume_live_4f8a7e6f4d2...c91
+lume_test_3c7d9a1b2f0...5d3</pre>
+          </div>
+        </article>
+
+        <article class="admin-section-card" style="margin-top: var(--lume-space-6);">
+          <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Danger Zone</div></div>
+          <div class="admin-section-body">
+            <div class="lume-callout lume-callout-danger" style="margin-bottom: var(--lume-space-4);"><div class="lume-callout-title">Delete Workspace</div>This permanently removes users, content, integrations, and billing history.</div>
+            <button class="lume-btn lume-btn-danger" onclick="showToast('Safety check enabled before delete', 'danger')">Request Workspace Deletion</button>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="admin-demo.js"></script>
+</body>
+</html>

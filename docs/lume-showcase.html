@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.setAttribute('data-ui-init','pending');try{const t=localStorage.getItem('lume-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(_){}</script>
+  <title>Lume — A Minimal CSS Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="lume.css" />
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Showcase-only styles */
+    .demo-section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--lume-border);
+    }
+
+    .demo-section:last-child {
+      border-bottom: none;
+    }
+
+    .demo-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--lume-text-subtle);
+      margin-bottom: 2.5rem;
+    }
+
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .demo-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .hero-section {
+      background: var(--lume-text);
+      color: var(--lume-white);
+      padding: 5rem 0;
+      text-align: center;
+    }
+
+    .hero-section .lume-display {
+      color: var(--lume-white);
+      margin-bottom: 1rem;
+    }
+
+    .hero-section .lume-lead {
+      color: rgba(250, 250, 248, 0.65);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 2rem;
+    }
+
+    .color-swatch {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--lume-radius-md);
+      border: 1px solid var(--lume-border);
+    }
+
+    .color-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      color: var(--lume-text-muted);
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    @media (min-width: 860px) {
+      .pattern-grid.two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .pattern-grid.three {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .showcase-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .section-intro {
+      max-width: 70ch;
+      color: var(--lume-text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-side {
+      border: 1px dashed var(--lume-border);
+      border-radius: var(--lume-radius-lg);
+      padding: 1rem;
+      background: var(--lume-surface);
+    }
+
+    .state-card {
+      border: 1px solid var(--lume-border);
+      border-radius: var(--lume-radius-lg);
+      padding: 1rem;
+      background: var(--lume-white);
+    }
+
+    .inline-kpi {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .inline-kpi .lume-stat {
+      padding: 0.9rem;
+    }
+
+    .mini-muted {
+      font-size: var(--lume-text-xs);
+      color: var(--lume-text-subtle);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="lume-navbar">
+    <a href="#" class="lume-navbar-brand"><img class="lume-navbar-brand-logo" src="lume-logo.png" alt="Lume logo" /></a>
+    <ul class="lume-navbar-nav">
+      <li><a href="#hero">Hero</a></li>
+      <li><a href="#auth">Auth</a></li>
+      <li><a href="#marketing">Marketing</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#dashboard">Dashboard</a></li>
+      <li><a href="#settings">Settings</a></li>
+      <li><a href="#states">States</a></li>
+      <li><a href="#cta">CTA</a></li>
+    </ul>
+    <div class="lume-navbar-actions">
+      <span class="lume-badge lume-badge-primary lume-badge-dot">v2.0.0</span>
+      <button class="lume-btn lume-btn-outline lume-btn-sm" id="theme-toggle" aria-label="Toggle dark mode" onclick="toggleTheme()">☾ Dark</button>
+      <a href="lume-docs.html" class="lume-btn lume-btn-outline-primary lume-btn-sm">Docs</a>
+      <a href="admin-demo/dashboard.html" class="lume-btn lume-btn-outline lume-btn-sm">Admin Demo</a>
+      <a href="https://github.com/iamtherealtim/lume-css" target="_blank" rel="noopener noreferrer" class="lume-btn lume-btn-dark lume-btn-sm">GitHub</a>
+    </div>
+  </nav>
+  <section class="hero-section" id="hero">
+    <div class="showcase-wrap" style="max-width: 760px; text-align: center;">
+      <div class="hero-pill"><span>✦</span> Pattern-First Showcase</div>
+      <div class="lume-display">Build complete interfaces, not just isolated components.</div>
+      <p class="lume-lead">The docs cover every class and variant. This page shows reusable, real-world compositions you can lift into products.</p>
+      <div class="demo-row" style="justify-content: center;">
+        <a class="lume-btn lume-btn-gradient-aurora lume-btn-lg" href="lume-docs.html">Open Docs</a>
+        <a class="lume-btn lume-btn-outline-primary lume-btn-lg" href="admin-demo/dashboard.html">Admin Demo</a>
+      </div>
+      <p class="mini-muted" style="margin-top: 1rem;">CDN: <code>https://cdn.jsdelivr.net/npm/lume-css/dist/lume.min.css</code></p>
+    </div>
+  </section>
+
+  <main class="showcase-wrap">
+    <section class="demo-section" id="auth">
+      <div class="demo-label">Auth Screens</div>
+      <p class="section-intro">Reusable login and sign-up shells using native Lume form patterns, callouts, and action rows.</p>
+      <div class="pattern-grid two">
+        <article class="lume-card lume-card-lifted">
+          <div class="lume-card-header">
+            <span class="lume-h4" style="font-size:1rem;">Welcome back</span>
+            <span class="lume-badge lume-badge-success lume-badge-pill">Secure</span>
+          </div>
+          <div class="lume-card-body lume-stack-4">
+            <div class="lume-form-group">
+              <label class="lume-label">Email</label>
+              <input class="lume-input" type="email" placeholder="you@company.com" />
+            </div>
+            <div class="lume-form-group" style="margin-bottom:0;">
+              <label class="lume-label">Password</label>
+              <input class="lume-input" type="password" placeholder="••••••••" />
+            </div>
+            <label class="lume-check-group"><input type="checkbox" checked /><span class="lume-check-label">Keep me signed in</span></label>
+            <button class="lume-btn lume-btn-primary lume-btn-block lume-with-icon"><i data-lucide="log-in" class="lume-icon"></i>Sign in</button>
+          </div>
+        </article>
+        <article class="lume-card">
+          <div class="lume-card-body lume-stack-4">
+            <h3 class="lume-card-title">Create your workspace</h3>
+            <div class="lume-form-group">
+              <label class="lume-label">Workspace name</label>
+              <input class="lume-input" placeholder="Acme Studio" />
+            </div>
+            <div class="lume-form-group">
+              <label class="lume-label">Work email</label>
+              <input class="lume-input" type="email" placeholder="team@acme.com" />
+            </div>
+            <div class="auth-side lume-small">Includes onboarding checklists, starter templates, and role permissions by default.</div>
+            <div class="demo-row" style="margin-bottom:0;">
+              <button class="lume-btn lume-btn-gradient-violet lume-btn-no-glow">Create account</button>
+              <button class="lume-btn lume-btn-outline">Use SSO</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo-section" id="marketing">
+      <div class="demo-label">Landing Hero + Features</div>
+      <p class="section-intro">Marketing-ready section blocks with editorial heading hierarchy, CTA clusters, and feature cards.</p>
+      <div class="lume-card lume-card-filled" style="margin-bottom:1rem;">
+        <div class="lume-card-body">
+          <span class="lume-overline">For product teams</span>
+          <h2 class="lume-h2" style="margin-top:.4rem;">Ship cleaner UI faster with a calmer design baseline.</h2>
+          <p class="lume-body" style="max-width:70ch;">Pair reusable tokens with practical components and skip the styling churn. Lume keeps decisions focused and consistent.</p>
+          <div class="demo-row" style="margin-top:1rem; margin-bottom:0;">
+            <button class="lume-btn lume-btn-gradient-forest lume-with-icon"><i data-lucide="rocket" class="lume-icon"></i>Start free</button>
+            <button class="lume-btn lume-btn-outline">Book demo</button>
+            <span class="lume-tag lume-with-icon"><i data-lucide="shield-check" class="lume-icon"></i>No lock-in</span>
+          </div>
+        </div>
+      </div>
+      <div class="pattern-grid three">
+        <article class="lume-card"><div class="lume-card-body"><h3 class="lume-card-title">Token-driven</h3><p class="lume-card-text">Theme once with CSS variables and keep scale coherent.</p></div></article>
+        <article class="lume-card"><div class="lume-card-body"><h3 class="lume-card-title">Accessible defaults</h3><p class="lume-card-text">Focus styles, reduced motion, and semantic patterns included.</p></div></article>
+        <article class="lume-card"><div class="lume-card-body"><h3 class="lume-card-title">Low-JS friendly</h3><p class="lume-card-text">Most UI works with markup and tiny interaction helpers.</p></div></article>
+      </div>
+    </section>
+
+    <section class="demo-section" id="pricing">
+      <div class="demo-label">Pricing Blocks</div>
+      <p class="section-intro">Composable pricing cards with highlighted plan treatment and clean comparison-ready structure.</p>
+      <div class="pattern-grid three">
+        <article class="lume-card"><div class="lume-card-body lume-stack-3"><span class="lume-badge lume-badge-neutral">Starter</span><h3 class="lume-card-title">$0</h3><p class="lume-card-text">Best for prototypes and individual work.</p><button class="lume-btn lume-btn-outline lume-btn-block">Get started</button></div></article>
+        <article class="lume-card lume-card-lifted"><div class="lume-card-body lume-stack-3"><span class="lume-badge lume-badge-primary lume-badge-pill">Most popular</span><h3 class="lume-card-title">$19<span class="lume-small">/mo</span></h3><p class="lume-card-text">For shipping production apps with teams.</p><button class="lume-btn lume-btn-gradient-sunset lume-btn-block">Start Pro</button></div></article>
+        <article class="lume-card"><div class="lume-card-body lume-stack-3"><span class="lume-badge lume-badge-dark">Enterprise</span><h3 class="lume-card-title">Custom</h3><p class="lume-card-text">Security reviews, procurement, and onboarding support.</p><button class="lume-btn lume-btn-dark lume-btn-block">Contact sales</button></div></article>
+      </div>
+    </section>
+
+    <section class="demo-section" id="dashboard">
+      <div class="demo-label">Dashboard Composition</div>
+      <p class="section-intro">Reusable dashboard shell using KPI cards, data tables, and activity lists that can be dropped into admin products.</p>
+      <div class="inline-kpi" style="margin-bottom:1rem;">
+        <div class="lume-stat"><div class="lume-stat-label">MRR</div><div class="lume-stat-value">$84.2k</div><div class="lume-stat-trend lume-stat-trend-up">+12.5%</div></div>
+        <div class="lume-stat"><div class="lume-stat-label">Churn</div><div class="lume-stat-value">2.4%</div><div class="lume-stat-trend lume-stat-trend-down">-0.3%</div></div>
+        <div class="lume-stat"><div class="lume-stat-label">Uptime</div><div class="lume-stat-value">99.9%</div><div class="lume-stat-trend lume-stat-trend-neutral">Stable</div></div>
+      </div>
+      <div class="pattern-grid two">
+        <article class="state-card">
+          <div class="lume-table-wrapper">
+            <table class="lume-table lume-table-hover">
+              <thead><tr><th>Customer</th><th>Status</th><th class="lume-text-right">Action</th></tr></thead>
+              <tbody>
+                <tr><td>Alice Chen</td><td><span class="lume-badge lume-badge-success lume-badge-dot lume-badge-pill">Active</span></td><td class="lume-text-right"><button class="lume-btn lume-btn-ghost lume-btn-sm">View</button></td></tr>
+                <tr><td>Marcus Webb</td><td><span class="lume-badge lume-badge-warning lume-badge-dot lume-badge-pill">Pending</span></td><td class="lume-text-right"><button class="lume-btn lume-btn-ghost lume-btn-sm">Review</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <article class="state-card">
+          <div class="lume-list">
+            <div class="lume-list-header">Activity</div>
+            <div class="lume-list-item"><i data-lucide="upload" class="lume-list-item-icon"></i><span class="lume-list-item-label">New asset uploaded</span><span class="lume-list-item-meta">2m</span></div>
+            <div class="lume-list-item"><i data-lucide="user-plus" class="lume-list-item-icon"></i><span class="lume-list-item-label">Team invite accepted</span><span class="lume-list-item-meta">14m</span></div>
+            <div class="lume-list-item"><i data-lucide="credit-card" class="lume-list-item-icon"></i><span class="lume-list-item-label">Invoice paid</span><span class="lume-list-item-meta">1h</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo-section" id="settings">
+      <div class="demo-label">Settings & Preferences</div>
+      <p class="section-intro">Common settings layout: tabs, profile form, notifications, and a compact action drawer trigger.</p>
+      <div class="lume-card">
+        <div class="lume-card-body">
+          <div class="lume-tabs" id="settings-tabs">
+            <button class="lume-tab is-active" onclick="switchTab(this, 'settings-account')">Account</button>
+            <button class="lume-tab" onclick="switchTab(this, 'settings-security')">Security</button>
+            <button class="lume-tab" onclick="switchTab(this, 'settings-billing')">Billing</button>
+          </div>
+          <div class="lume-tab-panels" style="padding-top:1rem;">
+            <div class="lume-tab-panel is-active" id="settings-account">
+              <div class="pattern-grid two">
+                <div class="lume-stack-3">
+                  <div class="lume-form-group"><label class="lume-label">Display name</label><input class="lume-input" value="Alex Carter" /></div>
+                  <div class="lume-form-group"><label class="lume-label">Email</label><input class="lume-input" value="alex@lume.dev" /></div>
+                </div>
+                <div class="lume-stack-3">
+                  <label class="lume-check-group"><input type="checkbox" checked /><span class="lume-check-label">Product updates</span></label>
+                  <label class="lume-check-group"><input type="checkbox" /><span class="lume-check-label">Weekly digest</span></label>
+                  <button class="lume-btn lume-btn-outline lume-with-icon" onclick="openQuickDrawer()"><i data-lucide="panel-right-open" class="lume-icon"></i>Open quick drawer</button>
+                </div>
+              </div>
+            </div>
+            <div class="lume-tab-panel" id="settings-security"><p class="lume-body">Use this panel for MFA toggles, session management, and auth providers.</p></div>
+            <div class="lume-tab-panel" id="settings-billing"><p class="lume-body">Use this panel for plan details, invoices, and payment methods.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lume-drawer-overlay" id="quick-drawer-overlay" onclick="closeQuickDrawer()"></div>
+      <aside class="lume-drawer lume-drawer-right" id="quick-drawer">
+        <div class="lume-drawer-header">
+          <div class="lume-drawer-title">Quick settings</div>
+          <button class="lume-drawer-close" onclick="closeQuickDrawer()">×</button>
+        </div>
+        <div class="lume-drawer-body lume-stack-3">
+          <label class="lume-check-group"><input type="checkbox" checked /><span class="lume-check-label">Enable dark mode by default</span></label>
+          <label class="lume-check-group"><input type="checkbox" /><span class="lume-check-label">Compact table density</span></label>
+        </div>
+        <div class="lume-drawer-footer">
+          <button class="lume-btn lume-btn-outline" onclick="closeQuickDrawer()">Cancel</button>
+          <button class="lume-btn lume-btn-primary" onclick="closeQuickDrawer()">Save</button>
+        </div>
+      </aside>
+    </section>
+
+    <section class="demo-section" id="states">
+      <div class="demo-label">Empty / Loading / Feedback States</div>
+      <p class="section-intro">State patterns for loading, no-data, warning context, and inline success/error feedback.</p>
+      <div class="pattern-grid three" style="align-items:start;">
+        <article class="state-card">
+          <div class="lume-empty">
+            <div class="lume-empty-icon">📂</div>
+            <div class="lume-empty-title">No files yet</div>
+            <div class="lume-empty-body">Upload your first file to begin.</div>
+            <div class="lume-empty-actions"><button class="lume-btn lume-btn-primary">Upload</button></div>
+          </div>
+        </article>
+        <article class="state-card">
+          <div class="lume-skeleton-card">
+            <div class="lume-skeleton lume-skeleton-card-img"></div>
+            <div class="lume-skeleton-card-body">
+              <div class="lume-skeleton lume-skeleton-heading"></div>
+              <div class="lume-skeleton lume-skeleton-text"></div>
+              <div class="lume-skeleton lume-skeleton-text"></div>
+            </div>
+          </div>
+        </article>
+        <article class="lume-stack-3">
+          <div class="lume-callout lume-callout-warning"><div class="lume-callout-title">Usage warning</div>You are near your request limit.</div>
+          <div class="lume-toast lume-toast-success" style="position:relative; animation:none;"><div class="lume-toast-content"><div class="lume-toast-title">Saved</div><div class="lume-toast-body">Preferences updated.</div></div><button class="lume-toast-close">×</button></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="demo-section" id="cta" style="border-bottom:none;">
+      <div class="demo-label">Final CTA Band</div>
+      <div class="lume-card lume-card-filled">
+        <div class="lume-card-body" style="text-align:center;">
+          <h2 class="lume-h3" style="margin-bottom:.6rem;">Ready to build with Lume?</h2>
+          <p class="lume-body" style="max-width:62ch; margin:0 auto 1rem;">Use docs for class-level references, and this showcase for compositional patterns you can adapt quickly.</p>
+          <div class="demo-row" style="justify-content:center; margin-bottom:0;">
+            <a class="lume-btn lume-btn-gradient-aurora" href="lume-docs.html">Read Documentation</a>
+            <a class="lume-btn lume-btn-outline" href="admin-demo/dashboard.html">Open Admin Demo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    function switchTab(tab, panelId) {
+      const tabBar = tab.parentElement;
+      const panels = tabBar.nextElementSibling;
+      tabBar.querySelectorAll('.lume-tab').forEach(item => item.classList.remove('is-active'));
+      panels.querySelectorAll('.lume-tab-panel').forEach(panel => panel.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      const nextPanel = document.getElementById(panelId);
+      if (nextPanel) nextPanel.classList.add('is-active');
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const btn = document.getElementById('theme-toggle');
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const nextTheme = isDark ? 'light' : 'dark';
+      html.setAttribute('data-theme', nextTheme);
+      if (btn) btn.textContent = isDark ? '☾ Dark' : '☀ Light';
+      try { localStorage.setItem('lume-theme', nextTheme); } catch (_) {}
+    }
+
+    try {
+      const savedTheme = localStorage.getItem('lume-theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const btn = document.getElementById('theme-toggle');
+        if (btn) btn.textContent = savedTheme === 'dark' ? '☀ Light' : '☾ Dark';
+      }
+    } catch (_) {}
+
+    function openQuickDrawer() {
+      const drawer = document.getElementById('quick-drawer');
+      const overlay = document.getElementById('quick-drawer-overlay');
+      if (drawer) drawer.classList.add('is-open');
+      if (overlay) overlay.classList.add('is-open');
+    }
+
+    function closeQuickDrawer() {
+      const drawer = document.getElementById('quick-drawer');
+      const overlay = document.getElementById('quick-drawer-overlay');
+      if (drawer) drawer.classList.remove('is-open');
+      if (overlay) overlay.classList.remove('is-open');
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeQuickDrawer();
+    });
+
+    document.addEventListener('click', function (event) {
+      if (event.target.classList.contains('lume-toast-close')) {
+        const toast = event.target.closest('.lume-toast');
+        if (toast) toast.remove();
+      }
+    });
+
+    function revealUiWhenReady() {
+      const removePending = () => document.documentElement.removeAttribute('data-ui-init');
+
+      const iconInit = () => {
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          window.lucide.createIcons();
+        }
+      };
+
+      const fontReady = (document.fonts && document.fonts.ready)
+        ? Promise.race([
+            document.fonts.ready,
+            new Promise((resolve) => setTimeout(resolve, 900))
+          ])
+        : Promise.resolve();
+
+      fontReady.finally(function () {
+        iconInit();
+        removePending();
+      });
+    }
+
+    if (document.readyState === 'complete') {
+      revealUiWhenReady();
+    } else {
+      window.addEventListener('load', revealUiWhenReady, { once: true });
+    }
+  </script>
+
+  <!-- Footer -->
+  <footer
+    style="background: var(--lume-text); color: rgba(255,255,255,0.4); text-align: center; padding: 2rem; font-size: 0.8rem;">
+    Lume CSS &mdash; MIT License &mdash; Built with ✦ and restraint.
+  </footer>
+
+</body>
+
+</html>

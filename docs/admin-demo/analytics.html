@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.setAttribute('data-ui-init','pending');try{const t=localStorage.getItem('lume-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(_){}</script>
+  <title>Lume Admin — Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Lora:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../lume.css" />
+  <link rel="stylesheet" href="admin-demo.css" />
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="admin-shell">
+    <div class="admin-overlay" onclick="closeSidebar()"></div>
+    <aside class="admin-sidebar">
+      <a class="admin-brand" href="dashboard.html"><img class="admin-brand-logo" src="../lume-logo.png" alt="Lume logo" /></a>
+      <div class="admin-nav-group"><div class="admin-nav-title">Overview</div><ul class="admin-nav"><li><a href="dashboard.html"><i data-lucide="layout-dashboard"></i>Dashboard</a></li><li><a class="is-active" href="analytics.html"><i data-lucide="bar-chart-3"></i>Analytics</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">Management</div><ul class="admin-nav"><li><a href="users.html"><i data-lucide="users"></i>Users</a></li><li><a href="orders.html"><i data-lucide="shopping-cart"></i>Orders</a></li><li><a href="billing.html"><i data-lucide="credit-card"></i>Billing</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">Operations</div><ul class="admin-nav"><li><a href="audit-logs.html"><i data-lucide="history"></i>Audit Logs</a></li><li><a href="support-tickets.html"><i data-lucide="life-buoy"></i>Support Tickets</a></li><li><a href="integrations.html"><i data-lucide="plug-zap"></i>Integrations</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">System</div><ul class="admin-nav"><li><a href="settings.html"><i data-lucide="settings"></i>Settings</a></li><li><a href="../lume-docs.html"><i data-lucide="book-open"></i>Library Docs</a></li><li><a href="../lume-showcase.html"><i data-lucide="sparkles"></i>Showcase</a></li></ul></div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <button class="lume-btn lume-btn-outline lume-btn-sm admin-menu-toggle" onclick="toggleSidebar()"><i data-lucide="menu"></i>Menu</button>
+        <div class="admin-topbar-search"><i data-lucide="search"></i><input class="lume-input lume-input-sm" placeholder="Search reports, cohorts, channels" /></div>
+        <div class="admin-actions">
+          <button class="lume-btn lume-btn-outline lume-btn-sm" data-theme-toggle onclick="toggleTheme()">☾ Dark</button>
+          <button class="lume-btn lume-btn-outline lume-btn-sm">Last 90 Days</button>
+          <button class="lume-btn lume-btn-primary lume-btn-sm" onclick="showToast('Report scheduled by email', 'success')">Schedule Report</button>
+        </div>
+      </header>
+
+      <section class="admin-page">
+        <div class="admin-page-head">
+          <div>
+            <h1 class="admin-page-title">Analytics</h1>
+            <p class="admin-page-subtitle">Compare channel performance, conversion funnels, and retention health over time.</p>
+          </div>
+        </div>
+
+        <div class="lume-tabs" style="margin-bottom: var(--lume-space-6);">
+          <button class="lume-tab is-active" onclick="switchTabs(this, 'analytics-overview')">Overview</button>
+          <button class="lume-tab" onclick="switchTabs(this, 'analytics-acquisition')">Acquisition</button>
+          <button class="lume-tab" onclick="switchTabs(this, 'analytics-retention')">Retention</button>
+        </div>
+
+        <div class="lume-tab-panels">
+          <div class="lume-tab-panel is-active" id="analytics-overview">
+            <div class="admin-three-col" style="margin-bottom: var(--lume-space-6);">
+              <div class="lume-stat"><div class="lume-stat-label">Sessions</div><div class="lume-stat-value">1.82M</div><div class="lume-stat-trend lume-stat-trend-up">+11.2%</div></div>
+              <div class="lume-stat"><div class="lume-stat-label">Conversion Rate</div><div class="lume-stat-value">4.9%</div><div class="lume-stat-trend lume-stat-trend-up">+0.7%</div></div>
+              <div class="lume-stat"><div class="lume-stat-label">CAC</div><div class="lume-stat-value">$38</div><div class="lume-stat-trend lume-stat-trend-down">-6.1%</div></div>
+            </div>
+
+            <div class="admin-two-col">
+              <article class="admin-chart">
+                <div class="lume-h4" style="font-size:1rem;">Traffic by Week</div>
+                <div class="admin-chart-bars">
+                  <div class="admin-chart-bar" style="height: 36%;"></div><div class="admin-chart-bar" style="height: 40%;"></div><div class="admin-chart-bar" style="height: 44%;"></div><div class="admin-chart-bar" style="height: 56%;"></div><div class="admin-chart-bar" style="height: 60%;"></div><div class="admin-chart-bar" style="height: 62%;"></div><div class="admin-chart-bar" style="height: 68%;"></div><div class="admin-chart-bar" style="height: 75%;"></div><div class="admin-chart-bar" style="height: 78%;"></div><div class="admin-chart-bar" style="height: 84%;"></div>
+                </div>
+              </article>
+              <article class="admin-section-card">
+                <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Funnel</div></div>
+                <div class="admin-section-body lume-stack-4">
+                  <div><div class="lume-flex lume-justify-between lume-mb-2"><span class="lume-small">Landing Views</span><span class="lume-small">100%</span></div><div class="lume-progress"><div class="lume-progress-bar" style="width:100%;"></div></div></div>
+                  <div><div class="lume-flex lume-justify-between lume-mb-2"><span class="lume-small">Signup Started</span><span class="lume-small">52%</span></div><div class="lume-progress"><div class="lume-progress-bar" style="width:52%;"></div></div></div>
+                  <div><div class="lume-flex lume-justify-between lume-mb-2"><span class="lume-small">Trial Activated</span><span class="lume-small">31%</span></div><div class="lume-progress"><div class="lume-progress-bar lume-progress-bar-success" style="width:31%;"></div></div></div>
+                  <div><div class="lume-flex lume-justify-between lume-mb-2"><span class="lume-small">Paid Conversion</span><span class="lume-small">4.9%</span></div><div class="lume-progress"><div class="lume-progress-bar lume-progress-bar-warning" style="width:4.9%;"></div></div></div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="lume-tab-panel" id="analytics-acquisition">
+            <div class="admin-section-card">
+              <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Channel Mix</div></div>
+              <div class="admin-section-body">
+                <div class="lume-grid lume-grid-3">
+                  <div class="lume-callout lume-callout-success"><div class="lume-callout-title">Organic Search</div>42% of traffic · best CAC</div>
+                  <div class="lume-callout lume-callout-info"><div class="lume-callout-title">Paid Search</div>27% of traffic · stable ROAS</div>
+                  <div class="lume-callout lume-callout-warning"><div class="lume-callout-title">Affiliate</div>11% of traffic · review partner quality</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lume-tab-panel" id="analytics-retention">
+            <div class="admin-section-card">
+              <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Cohort Retention</div></div>
+              <div class="admin-section-body">
+                <div class="lume-table-wrapper">
+                  <table class="lume-table lume-table-striped">
+                    <thead><tr><th>Cohort</th><th>Week 1</th><th>Week 4</th><th>Week 8</th><th>Week 12</th></tr></thead>
+                    <tbody>
+                      <tr><td>Jan 2026</td><td>92%</td><td>71%</td><td>58%</td><td>49%</td></tr>
+                      <tr><td>Dec 2025</td><td>90%</td><td>69%</td><td>55%</td><td>47%</td></tr>
+                      <tr><td>Nov 2025</td><td>88%</td><td>66%</td><td>52%</td><td>44%</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="admin-demo.js"></script>
+</body>
+</html>

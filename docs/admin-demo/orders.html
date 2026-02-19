@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.setAttribute('data-ui-init','pending');try{const t=localStorage.getItem('lume-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(_){}</script>
+  <title>Lume Admin — Orders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Lora:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../lume.css" />
+  <link rel="stylesheet" href="admin-demo.css" />
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="admin-shell">
+    <div class="admin-overlay" onclick="closeSidebar()"></div>
+    <aside class="admin-sidebar">
+      <a class="admin-brand" href="dashboard.html"><img class="admin-brand-logo" src="../lume-logo.png" alt="Lume logo" /></a>
+      <div class="admin-nav-group"><div class="admin-nav-title">Overview</div><ul class="admin-nav"><li><a href="dashboard.html"><i data-lucide="layout-dashboard"></i>Dashboard</a></li><li><a href="analytics.html"><i data-lucide="bar-chart-3"></i>Analytics</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">Management</div><ul class="admin-nav"><li><a href="users.html"><i data-lucide="users"></i>Users</a></li><li><a class="is-active" href="orders.html"><i data-lucide="shopping-cart"></i>Orders</a></li><li><a href="billing.html"><i data-lucide="credit-card"></i>Billing</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">Operations</div><ul class="admin-nav"><li><a href="audit-logs.html"><i data-lucide="history"></i>Audit Logs</a></li><li><a href="support-tickets.html"><i data-lucide="life-buoy"></i>Support Tickets</a></li><li><a href="integrations.html"><i data-lucide="plug-zap"></i>Integrations</a></li></ul></div>
+      <div class="admin-nav-group"><div class="admin-nav-title">System</div><ul class="admin-nav"><li><a href="settings.html"><i data-lucide="settings"></i>Settings</a></li><li><a href="../lume-docs.html"><i data-lucide="book-open"></i>Library Docs</a></li><li><a href="../lume-showcase.html"><i data-lucide="sparkles"></i>Showcase</a></li></ul></div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <button class="lume-btn lume-btn-outline lume-btn-sm admin-menu-toggle" onclick="toggleSidebar()"><i data-lucide="menu"></i>Menu</button>
+        <div class="admin-topbar-search"><i data-lucide="search"></i><input class="lume-input lume-input-sm" placeholder="Search order ID, customer, sku" /></div>
+        <div class="admin-actions">
+          <button class="lume-btn lume-btn-outline lume-btn-sm" data-theme-toggle onclick="toggleTheme()">☾ Dark</button>
+          <button class="lume-btn lume-btn-primary lume-btn-sm" onclick="showToast('CSV export started', 'info')">Export CSV</button>
+          <div class="lume-avatar">AC</div>
+        </div>
+      </header>
+
+      <section class="admin-page">
+        <div class="admin-page-head">
+          <div>
+            <h1 class="admin-page-title">Orders</h1>
+            <p class="admin-page-subtitle">Monitor transactions, shipping, and fulfillment quality across all channels.</p>
+          </div>
+        </div>
+
+        <div class="admin-kpis" style="margin-bottom: var(--lume-space-6);">
+          <div class="lume-stat"><div class="lume-stat-label">Orders Today</div><div class="lume-stat-value">412</div><div class="lume-stat-trend lume-stat-trend-up">+14.1%</div></div>
+          <div class="lume-stat"><div class="lume-stat-label">AOV</div><div class="lume-stat-value">$128</div><div class="lume-stat-trend lume-stat-trend-up">+5.8%</div></div>
+          <div class="lume-stat"><div class="lume-stat-label">Refund Rate</div><div class="lume-stat-value">1.3%</div><div class="lume-stat-trend lume-stat-trend-down">-0.4%</div></div>
+          <div class="lume-stat"><div class="lume-stat-label">Fulfillment SLA</div><div class="lume-stat-value">96%</div><div class="lume-stat-description">Target 95%</div></div>
+        </div>
+
+        <article class="admin-section-card" style="margin-bottom: var(--lume-space-6);">
+          <div class="admin-section-head">
+            <div class="lume-h4" style="font-size:1rem;">Order Queue</div>
+            <div class="demo-row">
+              <button class="lume-btn lume-btn-outline lume-btn-sm">Pending</button>
+              <button class="lume-btn lume-btn-outline lume-btn-sm">Processing</button>
+              <button class="lume-btn lume-btn-outline lume-btn-sm">Fulfilled</button>
+            </div>
+          </div>
+          <div class="admin-section-body">
+            <div class="lume-table-wrapper">
+              <table class="lume-table lume-table-hover">
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Payment</th>
+                    <th class="lume-text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="lume-font-semibold">#LUM-12093</td>
+                    <td>Olivia Ramirez</td>
+                    <td>$242.00</td>
+                    <td><span class="lume-badge lume-badge-warning lume-badge-dot lume-badge-pill">Processing</span></td>
+                    <td><span class="lume-badge lume-badge-success">Paid</span></td>
+                    <td class="lume-text-right"><button class="lume-btn lume-btn-ghost lume-btn-sm">Open</button></td>
+                  </tr>
+                  <tr>
+                    <td class="lume-font-semibold">#LUM-12092</td>
+                    <td>Ethan Patel</td>
+                    <td>$89.00</td>
+                    <td><span class="lume-badge lume-badge-info lume-badge-dot lume-badge-pill">Packed</span></td>
+                    <td><span class="lume-badge lume-badge-success">Paid</span></td>
+                    <td class="lume-text-right"><button class="lume-btn lume-btn-ghost lume-btn-sm">Open</button></td>
+                  </tr>
+                  <tr>
+                    <td class="lume-font-semibold">#LUM-12091</td>
+                    <td>Noah Lee</td>
+                    <td>$356.00</td>
+                    <td><span class="lume-badge lume-badge-danger lume-badge-dot lume-badge-pill">Issue</span></td>
+                    <td><span class="lume-badge lume-badge-warning">Review</span></td>
+                    <td class="lume-text-right"><button class="lume-btn lume-btn-ghost lume-btn-sm">Open</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <div class="admin-two-col">
+          <article class="admin-section-card">
+            <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Fulfillment Workflow</div></div>
+            <div class="admin-section-body">
+              <div class="lume-steps lume-steps-vertical">
+                <div class="lume-step lume-step-completed"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Order confirmed</div><div class="lume-step-subtitle">09:14 UTC</div></div></div>
+                <div class="lume-step lume-step-completed"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Payment captured</div><div class="lume-step-subtitle">09:15 UTC</div></div></div>
+                <div class="lume-step lume-step-active"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Picking & packing</div><div class="lume-step-subtitle">In progress</div></div></div>
+                <div class="lume-step"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Out for delivery</div><div class="lume-step-subtitle">Pending</div></div></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="admin-section-card">
+            <div class="admin-section-head"><div class="lume-h4" style="font-size:1rem;">Operational Notes</div></div>
+            <div class="admin-section-body lume-stack-4">
+              <div class="lume-callout lume-callout-warning"><div class="lume-callout-title">Carrier Delay Risk</div>North-east routes may slip by up to 12 hours due to weather.</div>
+              <div class="lume-callout lume-callout-info"><div class="lume-callout-title">Cutoff Reminder</div>Same-day shipping cutoff is 17:00 local warehouse time.</div>
+              <div class="lume-accordion">
+                <details class="lume-accordion-item" open><summary class="lume-accordion-trigger">Return policy quick-check</summary><div class="lume-accordion-body">Orders are refundable within 30 days for unopened products.</div></details>
+                <details class="lume-accordion-item"><summary class="lume-accordion-trigger">Fraud verification rules</summary><div class="lume-accordion-body">Auto-flag orders over $600 with mismatch billing region.</div></details>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script defer src="admin-demo.js"></script>
+</body>
+</html>

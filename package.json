@@ -1,0 +1,49 @@
+{
+  "name": "lume-css",
+  "version": "1.0.0",
+  "description": "A minimal open-source CSS library for thoughtful interfaces.",
+  "license": "MIT",
+  "main": "dist/lume.js",
+  "style": "dist/lume.css",
+  "exports": {
+    ".": {
+      "default": "./dist/lume.js",
+      "style": "./dist/lume.css"
+    },
+    "./lume.css": "./dist/lume.css",
+    "./lume.js": "./dist/lume.js",
+    "./core.css": "./dist/core.css",
+    "./components.css": "./dist/components.css",
+    "./utilities.css": "./dist/utilities.css",
+    "./a11y.css": "./dist/a11y.css",
+    "./responsive.css": "./dist/responsive.css"
+  },
+  "scripts": {
+    "split:css": "node scripts/split-css.mjs",
+    "build:css": "node scripts/build-css.mjs"
+  },
+  "unpkg": "dist/lume.min.css",
+  "jsdelivr": "dist/lume.min.css",
+  "files": [
+    "dist",
+    "docs",
+    "lume.css",
+    "lume.js",
+    "lume-logo.png"
+  ],
+  "keywords": [
+    "css",
+    "design-system",
+    "ui",
+    "components",
+    "minimal"
+  ],
+  "homepage": "https://github.com/iamtherealtim/lume-css#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamtherealtim/lume-css.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iamtherealtim/lume-css/issues"
+  }
+}

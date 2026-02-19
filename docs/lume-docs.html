@@ -1,0 +1,2692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>document.documentElement.setAttribute('data-ui-init','pending');try{const t=localStorage.getItem('lume-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(_){}</script>
+  <title>Lume CSS — Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="lume.css" />
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --docs-sidebar-w: 260px;
+      --docs-header-h: 64px;
+      --docs-content-w: 1020px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--lume-bg);
+      color: var(--lume-text);
+    }
+
+    .docs-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      height: var(--docs-header-h);
+      border-bottom: 1px solid var(--lume-border);
+      background: color-mix(in srgb, var(--lume-bg) 92%, transparent);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--lume-space-6);
+      gap: var(--lume-space-4);
+    }
+
+    .docs-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      line-height: 0;
+      font-family: var(--lume-font-serif);
+      font-size: var(--lume-text-xl);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--lume-text);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .docs-brand-logo {
+      width: 128px;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .docs-search {
+      margin-left: auto;
+      max-width: 360px;
+      width: 100%;
+      position: relative;
+    }
+
+    .docs-search input {
+      width: 100%;
+      padding-left: 2.2rem;
+    }
+
+    .docs-search i,
+    .docs-search svg {
+      position: absolute;
+      left: 0.7rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--lume-text-subtle);
+      pointer-events: none;
+    }
+
+    .docs-layout {
+      display: grid;
+      grid-template-columns: var(--docs-sidebar-w) 1fr;
+      gap: 0;
+      max-width: calc(var(--docs-content-w) + var(--docs-sidebar-w));
+      margin: 0 auto;
+    }
+
+    .docs-sidebar {
+      position: sticky;
+      top: var(--docs-header-h);
+      align-self: start;
+      height: calc(100vh - var(--docs-header-h));
+      overflow-y: auto;
+      border-right: 1px solid var(--lume-border);
+      padding: var(--lume-space-6) var(--lume-space-4);
+      background: color-mix(in srgb, var(--lume-bg) 96%, transparent);
+    }
+
+    .docs-side-title {
+      font-size: var(--lume-text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lume-text-subtle);
+      margin-bottom: var(--lume-space-3);
+      padding-left: var(--lume-space-2);
+    }
+
+    .docs-nav {
+      list-style: none;
+      display: grid;
+      gap: 2px;
+      margin-bottom: var(--lume-space-6);
+    }
+
+    .docs-nav a {
+      display: flex;
+      align-items: center;
+      padding: 0.4rem 0.55rem;
+      border-radius: var(--lume-radius);
+      text-decoration: none;
+      color: var(--lume-text-muted);
+      font-size: var(--lume-text-sm);
+      line-height: 1.25;
+      border: 1px solid transparent;
+      transition: background var(--lume-transition), color var(--lume-transition), border-color var(--lume-transition);
+    }
+
+    .docs-nav a:hover {
+      background: var(--lume-surface);
+      color: var(--lume-text);
+    }
+
+    .docs-nav a.is-active {
+      background: var(--lume-accent-light);
+      color: var(--lume-accent-dark);
+      border-color: color-mix(in srgb, var(--lume-accent) 20%, var(--lume-border));
+      font-weight: 600;
+    }
+
+    .docs-main {
+      min-width: 0;
+      padding: var(--lume-space-10) var(--lume-space-8) var(--lume-space-16);
+    }
+
+    .docs-wrap {
+      max-width: var(--docs-content-w);
+      margin: 0 auto;
+      display: grid;
+      gap: var(--lume-space-12);
+    }
+
+    .docs-hero {
+      border: 1px solid var(--lume-border);
+      border-radius: var(--lume-radius-xl);
+      background: linear-gradient(160deg, var(--lume-white), var(--lume-surface));
+      padding: var(--lume-space-10);
+    }
+
+    .docs-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: var(--lume-text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--lume-text-subtle);
+      margin-bottom: var(--lume-space-4);
+    }
+
+    .docs-hero h1 {
+      font-family: var(--lume-font-serif);
+      font-size: clamp(1.9rem, 3.2vw, 2.6rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--lume-space-4);
+      color: var(--lume-text);
+    }
+
+    .docs-hero p {
+      color: var(--lume-text-muted);
+      max-width: 72ch;
+      line-height: var(--lume-leading-loose);
+      margin-bottom: var(--lume-space-6);
+    }
+
+    .docs-pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--lume-space-2);
+    }
+
+    .docs-pill {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--lume-border);
+      border-radius: var(--lume-radius-full);
+      padding: 0.2rem 0.65rem;
+      font-size: var(--lume-text-xs);
+      color: var(--lume-text-muted);
+      background: var(--lume-white);
+    }
+
+    .docs-section {
+      scroll-margin-top: calc(var(--docs-header-h) + 16px);
+      display: grid;
+      gap: var(--lume-space-5);
+    }
+
+    .docs-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--lume-space-3);
+      border-bottom: 1px solid var(--lume-border);
+      padding-bottom: var(--lume-space-3);
+    }
+
+    .docs-section h2 {
+      font-family: var(--lume-font-serif);
+      font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+      color: var(--lume-text);
+      letter-spacing: -0.01em;
+    }
+
+    .docs-section p {
+      color: var(--lume-text-muted);
+      line-height: var(--lume-leading-loose);
+    }
+
+    .docs-note {
+      border: 1px solid var(--lume-border);
+      background: var(--lume-surface);
+      border-radius: var(--lume-radius-md);
+      padding: var(--lume-space-4) var(--lume-space-5);
+      font-size: var(--lume-text-sm);
+      color: var(--lume-text-muted);
+      line-height: var(--lume-leading-normal);
+    }
+
+    .docs-grid {
+      display: grid;
+      gap: var(--lume-space-6);
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .docs-example {
+      border: 1px solid var(--lume-border);
+      border-radius: var(--lume-radius-lg);
+      overflow: hidden;
+      background: var(--lume-white);
+    }
+
+    .docs-example-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--lume-space-3);
+      padding: var(--lume-space-3) var(--lume-space-4);
+      border-bottom: 1px solid var(--lume-border);
+      background: var(--lume-surface);
+    }
+
+    .docs-example-title {
+      font-size: var(--lume-text-sm);
+      font-weight: 600;
+      color: var(--lume-text);
+    }
+
+    .docs-preview {
+      padding: var(--lume-space-6);
+      background: var(--lume-white);
+    }
+
+    .docs-code {
+      margin: 0;
+      border-top: 1px solid color-mix(in srgb, var(--lume-accent) 18%, var(--lume-border));
+      border-radius: 0;
+      position: relative;
+      white-space: pre;
+      overflow-x: auto;
+      background:
+        radial-gradient(1200px 220px at -10% -40%, color-mix(in srgb, var(--lume-accent) 10%, transparent), transparent 60%),
+        radial-gradient(800px 180px at 120% 140%, color-mix(in srgb, var(--lume-info) 8%, transparent), transparent 55%),
+        linear-gradient(180deg, #F8F8FC 0%, #F4F5FB 100%);
+      color: #334155;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      font-size: 0.84rem;
+      line-height: 1.65;
+    }
+
+    [data-theme="dark"] .docs-code {
+      border-top-color: color-mix(in srgb, var(--lume-accent) 34%, var(--lume-border));
+      background:
+        radial-gradient(1200px 220px at -10% -40%, color-mix(in srgb, var(--lume-accent) 18%, transparent), transparent 60%),
+        radial-gradient(800px 180px at 120% 140%, color-mix(in srgb, var(--lume-info) 14%, transparent), transparent 55%),
+        linear-gradient(180deg, #1D2231 0%, #1A1F2D 100%);
+      color: #D7E1F2;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .docs-code .tok-comment { color: #64748B; }
+    .docs-code .tok-bracket { color: #7C3AED; }
+    .docs-code .tok-tag { color: #4F46E5; }
+    .docs-code .tok-attr { color: #0F766E; }
+    .docs-code .tok-punc { color: #64748B; }
+    .docs-code .tok-string { color: #B45309; }
+    .docs-code .tok-doctype { color: #7C3AED; font-weight: 600; }
+
+    [data-theme="dark"] .docs-code .tok-comment { color: #8FA2BD; }
+    [data-theme="dark"] .docs-code .tok-bracket { color: #A78BFA; }
+    [data-theme="dark"] .docs-code .tok-tag { color: #C4B5FD; }
+    [data-theme="dark"] .docs-code .tok-attr { color: #5EEAD4; }
+    [data-theme="dark"] .docs-code .tok-punc { color: #9AAEC9; }
+    [data-theme="dark"] .docs-code .tok-string { color: #FCD34D; }
+    [data-theme="dark"] .docs-code .tok-doctype { color: #C4B5FD; font-weight: 600; }
+
+    .docs-copy {
+      appearance: none;
+      border: 1px solid var(--lume-border-dark);
+      background: color-mix(in srgb, var(--lume-white) 86%, #EEF2FF);
+      color: #4B5563;
+      font-size: var(--lume-text-xs);
+      font-weight: 600;
+      border-radius: var(--lume-radius-sm);
+      padding: 0.2rem 0.5rem;
+      cursor: pointer;
+      transition: background var(--lume-transition), color var(--lume-transition);
+    }
+
+    .docs-copy:hover {
+      background: #EEF2FF;
+      color: #3730A3;
+      border-color: color-mix(in srgb, var(--lume-accent) 45%, var(--lume-border-dark));
+    }
+
+    .docs-copy.is-copied {
+      border-color: var(--lume-accent);
+      color: var(--lume-accent-dark);
+      background: var(--lume-accent-light);
+    }
+
+    [data-theme="dark"] .docs-copy {
+      background: color-mix(in srgb, var(--lume-surface) 88%, #2B3348);
+      color: #C7D2E8;
+      border-color: color-mix(in srgb, var(--lume-border-dark) 75%, #475569);
+    }
+
+    [data-theme="dark"] .docs-copy:hover {
+      background: #2A3348;
+      color: #E2E8F0;
+      border-color: color-mix(in srgb, var(--lume-accent) 45%, #64748B);
+    }
+
+    .docs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--lume-text-sm);
+      border: 1px solid var(--lume-border);
+      border-radius: var(--lume-radius-md);
+      overflow: hidden;
+      background: var(--lume-white);
+    }
+
+    .docs-table th,
+    .docs-table td {
+      text-align: left;
+      padding: var(--lume-space-3) var(--lume-space-4);
+      border-bottom: 1px solid var(--lume-border);
+      vertical-align: top;
+    }
+
+    .docs-table th {
+      font-size: var(--lume-text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--lume-text-subtle);
+      background: var(--lume-surface);
+    }
+
+    .docs-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .docs-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--lume-space-2);
+    }
+
+    .docs-chip {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--lume-border);
+      background: var(--lume-surface);
+      border-radius: var(--lume-radius-full);
+      padding: 0.2rem 0.65rem;
+      font-size: var(--lume-text-xs);
+      color: var(--lume-text-muted);
+    }
+
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .color-swatch {
+      width: 54px;
+      height: 54px;
+      border-radius: var(--lume-radius-md);
+      border: 1px solid var(--lume-border);
+    }
+
+    .color-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.7rem;
+      color: var(--lume-text-muted);
+      text-align: center;
+    }
+
+    .docs-split {
+      display: grid;
+      gap: var(--lume-space-6);
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    @media (min-width: 960px) {
+      .docs-split {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 880px) {
+      .docs-grid.cols-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 1080px) {
+      .docs-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .docs-sidebar {
+        position: sticky;
+        top: var(--docs-header-h);
+        height: auto;
+        max-height: 42vh;
+        overflow-y: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--lume-border);
+        padding-top: var(--lume-space-4);
+        padding-bottom: var(--lume-space-4);
+        background: color-mix(in srgb, var(--lume-bg) 96%, transparent);
+        z-index: 20;
+      }
+
+      .docs-main {
+        padding-top: var(--lume-space-8);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .docs-header {
+        height: auto;
+        padding: var(--lume-space-3) var(--lume-space-4);
+        flex-wrap: wrap;
+      }
+
+      .docs-sidebar {
+        top: 0;
+        position: relative;
+        max-height: 320px;
+      }
+
+      .docs-search {
+        max-width: none;
+        margin-left: 0;
+      }
+
+      .docs-main {
+        padding: var(--lume-space-6) var(--lume-space-4) var(--lume-space-12);
+      }
+
+      .docs-hero {
+        padding: var(--lume-space-6);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="docs-header">
+    <a class="docs-brand" href="#overview"><img class="docs-brand-logo" src="lume-logo.png" alt="Lume logo" /></a>
+
+    <div class="docs-search">
+      <i data-lucide="search"></i>
+      <input id="docs-search" class="lume-input lume-input-sm" type="search" placeholder="Search components, classes, utilities..." />
+    </div>
+
+    <button class="lume-btn lume-btn-outline lume-btn-sm" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☾ Dark</button>
+    <a class="lume-btn lume-btn-outline-primary lume-btn-sm" href="admin-demo/dashboard.html">Admin Demo</a>
+    <a class="lume-btn lume-btn-outline-primary lume-btn-sm" href="lume-showcase.html">Showcase</a>
+    <a class="lume-btn lume-btn-dark lume-btn-sm" href="https://github.com/iamtherealtim/lume-css" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </header>
+
+  <div class="docs-layout">
+    <aside class="docs-sidebar" aria-label="Documentation navigation">
+      <div class="docs-side-title">Getting Started</div>
+      <ul class="docs-nav">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#starter-templates">Starter Templates</a></li>
+        <li><a href="#no-flicker">No Flicker Setup</a></li>
+        <li><a href="#theming">Theming</a></li>
+      </ul>
+
+      <div class="docs-side-title">Foundations</div>
+      <ul class="docs-nav">
+        <li><a href="#tokens">Design Tokens</a></li>
+        <li><a href="#typography">Typography</a></li>
+        <li><a href="#layout">Layout</a></li>
+      </ul>
+
+      <div class="docs-side-title">Core Components</div>
+      <ul class="docs-nav">
+        <li><a href="#buttons">Buttons</a></li>
+        <li><a href="#forms">Forms</a></li>
+        <li><a href="#cards">Cards</a></li>
+        <li><a href="#badges">Badges & Tags</a></li>
+        <li><a href="#alerts">Alerts</a></li>
+        <li><a href="#tables">Tables</a></li>
+        <li><a href="#modal">Modal</a></li>
+        <li><a href="#tooltip">Tooltip</a></li>
+        <li><a href="#tabs">Tabs</a></li>
+        <li><a href="#accordion">Accordion</a></li>
+        <li><a href="#dropdown">Dropdown</a></li>
+        <li><a href="#progress">Progress & Spinner</a></li>
+        <li><a href="#avatar">Avatar</a></li>
+        <li><a href="#toast">Toast</a></li>
+        <li><a href="#breadcrumb">Breadcrumb</a></li>
+        <li><a href="#pagination">Pagination</a></li>
+        <li><a href="#skeleton">Skeleton</a></li>
+      </ul>
+
+      <div class="docs-side-title">Extended Components</div>
+      <ul class="docs-nav">
+        <li><a href="#callout">Callout</a></li>
+        <li><a href="#list-group">List Group</a></li>
+        <li><a href="#stat">Stat / KPI</a></li>
+        <li><a href="#empty">Empty State</a></li>
+        <li><a href="#stepper">Stepper</a></li>
+        <li><a href="#drawer">Drawer</a></li>
+        <li><a href="#kbd">Keyboard / Kbd</a></li>
+      </ul>
+
+      <div class="docs-side-title">Utilities & JS</div>
+      <ul class="docs-nav">
+        <li><a href="#utilities">Utilities</a></li>
+        <li><a href="#icon-usage">Icon Set &amp; Mapping</a></li>
+        <li><a href="#javascript">JavaScript Patterns</a></li>
+        <li><a href="#accessibility">Accessibility</a></li>
+      </ul>
+    </aside>
+
+    <main class="docs-main">
+      <div class="docs-wrap">
+        <section id="overview" class="docs-hero docs-section">
+          <div class="docs-kicker">Developer Documentation</div>
+          <h1>Lume CSS Documentation</h1>
+          <p>
+            Lume is a minimal CSS library for thoughtful interfaces. This documentation is organized by foundation,
+            component, and utility layers, with copy-ready HTML snippets for each pattern.
+          </p>
+          <div class="docs-pill-list">
+            <span class="docs-pill">CDN-ready</span>
+            <span class="docs-pill">CSS variables</span>
+            <span class="docs-pill">Dark mode</span>
+            <span class="docs-pill">Accessibility-aware</span>
+            <span class="docs-pill">Low JavaScript footprint</span>
+          </div>
+          <div class="docs-note" style="margin-top: .9rem;">
+            <strong>Production startup checklist:</strong>
+            preload theme before CSS, use <code>data-ui-init=&quot;pending&quot;</code> with
+            <code>html[data-ui-init=&quot;pending&quot;] body { visibility: hidden; }</code>, defer icon script, and reveal after
+            <code>window.load</code> + bounded fonts wait.
+            See <a href="#no-flicker">No Flicker Setup</a>.
+          </div>
+        </section>
+
+        <section id="installation" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Installation</h2>
+          </div>
+          <p>Use Lume from the local file, your npm package build, or a CDN. Start with one stylesheet import, then apply <a href="#no-flicker">No Flicker Setup</a> for stable first paint.</p>
+          <div class="docs-grid cols-2">
+            <article class="docs-example docs-search-item" data-search="installation cdn link import">
+              <div class="docs-example-head">
+                <div class="docs-example-title">CDN</div>
+                <button class="docs-copy" data-copy-target="code-install-cdn">Copy</button>
+              </div>
+              <pre id="code-install-cdn" class="lume-pre docs-code">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/lume-css/dist/lume.min.css&quot; /&gt;</pre>
+            </article>
+            <article class="docs-example docs-search-item" data-search="installation npm import">
+              <div class="docs-example-head">
+                <div class="docs-example-title">npm / local build</div>
+                <button class="docs-copy" data-copy-target="code-install-npm">Copy</button>
+              </div>
+              <pre id="code-install-npm" class="lume-pre docs-code">npm install lume-css
+
+/* app.css */
+@import &quot;lume-css/dist/lume.css&quot;;</pre>
+            </article>
+          </div>
+        </section>
+
+        <section id="starter-templates" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Starter Templates</h2>
+          </div>
+          <p>
+            Choose a setup path: full bundle for fastest integration, or partial module imports when you want tighter payload control.
+          </p>
+          <div class="docs-grid cols-2">
+            <article class="docs-example docs-search-item" data-search="starter full bundle lume.css lume.js">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Full bundle (fastest)</div>
+                <button class="docs-copy" data-copy-target="code-starter-full">Copy</button>
+              </div>
+              <pre id="code-starter-full" class="lume-pre docs-code">&lt;!-- HTML app shell --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/lume-css/dist/lume.min.css&quot; /&gt;
+&lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/lume-css/dist/lume.js&quot;&gt;&lt;/script&gt;</pre>
+            </article>
+
+            <article class="docs-example docs-search-item" data-search="starter partial modules core components utilities">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Partial modules (selective)</div>
+                <button class="docs-copy" data-copy-target="code-starter-partial">Copy</button>
+              </div>
+              <pre id="code-starter-partial" class="lume-pre docs-code">/* app.css */
+@import &quot;lume-css/core.css&quot;;
+@import &quot;lume-css/components.css&quot;;
+@import &quot;lume-css/utilities.css&quot;;
+
+/* optional */
+@import &quot;lume-css/a11y.css&quot;;
+@import &quot;lume-css/responsive.css&quot;;</pre>
+            </article>
+          </div>
+          <article class="docs-example docs-search-item" data-search="starter interactive modal data-lume-toggle data-lume-target">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Interactive starter (modal toggle)</div>
+              <button class="docs-copy" data-copy-target="code-starter-interactive">Copy</button>
+            </div>
+            <pre id="code-starter-interactive" class="lume-pre docs-code">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/lume-css/dist/lume.min.css&quot; /&gt;
+&lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/lume-css/dist/lume.js&quot;&gt;&lt;/script&gt;
+
+&lt;button
+  class=&quot;lume-btn lume-btn-primary&quot;
+  data-lume-toggle=&quot;modal&quot;
+  data-lume-target=&quot;#starter-modal&quot;&gt;
+  Open modal
+&lt;/button&gt;
+
+&lt;div class=&quot;lume-modal-overlay&quot; id=&quot;starter-modal&quot;&gt;
+  &lt;div class=&quot;lume-modal&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot; aria-labelledby=&quot;starter-modal-title&quot;&gt;
+    &lt;div class=&quot;lume-modal-header&quot;&gt;
+      &lt;h3 class=&quot;lume-h4&quot; id=&quot;starter-modal-title&quot;&gt;Starter modal&lt;/h3&gt;
+      &lt;button class=&quot;lume-modal-close&quot; data-lume-close data-lume-target=&quot;#starter-modal&quot; aria-label=&quot;Close&quot;&gt;&amp;times;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;lume-modal-body&quot;&gt;
+      &lt;p class=&quot;lume-body&quot;&gt;This modal opens and closes using Lume's data attributes.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;lume-modal-footer&quot;&gt;
+      &lt;button class=&quot;lume-btn lume-btn-outline&quot; data-lume-close data-lume-target=&quot;#starter-modal&quot;&gt;Close&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+          </article>
+          <article class="docs-example docs-search-item" data-search="starter interactive dropdown data-lume-toggle data-lume-target">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Interactive starter (dropdown toggle)</div>
+              <button class="docs-copy" data-copy-target="code-starter-dropdown">Copy</button>
+            </div>
+            <pre id="code-starter-dropdown" class="lume-pre docs-code">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/lume-css/dist/lume.min.css&quot; /&gt;
+&lt;script defer src=&quot;https://cdn.jsdelivr.net/npm/lume-css/dist/lume.js&quot;&gt;&lt;/script&gt;
+
+&lt;div class=&quot;lume-dropdown&quot; id=&quot;starter-dropdown&quot;&gt;
+  &lt;button
+    class=&quot;lume-btn lume-btn-outline&quot;
+    data-lume-toggle=&quot;dropdown&quot;
+    data-lume-target=&quot;#starter-dropdown&quot;&gt;
+    Open menu
+  &lt;/button&gt;
+
+  &lt;div class=&quot;lume-dropdown-menu&quot; role=&quot;menu&quot;&gt;
+    &lt;button class=&quot;lume-dropdown-item&quot; role=&quot;menuitem&quot;&gt;Profile&lt;/button&gt;
+    &lt;button class=&quot;lume-dropdown-item&quot; role=&quot;menuitem&quot;&gt;Billing&lt;/button&gt;
+    &lt;button class=&quot;lume-dropdown-item lume-dropdown-item-danger&quot; role=&quot;menuitem&quot;&gt;Sign out&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+          </article>
+          <div class="docs-note">Utilities are namespaced as <code>lume-*</code> to avoid collisions with existing app styles.</div>
+        </section>
+
+        <section id="no-flicker" class="docs-section">
+          <div class="docs-section-head">
+            <h2>No Flicker Setup</h2>
+          </div>
+          <p>
+            Use this startup pattern to prevent first-paint theme flashes and layout shifts while fonts and icons initialize.
+            It sets theme early, keeps the page hidden during hydration, and reveals it once the UI is ready.
+          </p>
+          <article class="docs-example docs-search-item" data-search="no flicker flash hydration first paint theme localStorage lucide fonts">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Drop-in startup snippet</div>
+              <button class="docs-copy" data-copy-target="code-no-flicker">Copy</button>
+            </div>
+            <pre id="code-no-flicker" class="lume-pre docs-code">&lt;!-- 1) Prepaint init: place this before your CSS links --&gt;
+&lt;script&gt;
+  document.documentElement.setAttribute('data-ui-init', 'pending');
+  try {
+    const savedTheme = localStorage.getItem('lume-theme');
+    if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+  } catch (_) {}
+&lt;/script&gt;
+
+&lt;!-- 2) Lume CSS --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;lume.css&quot; /&gt;
+
+&lt;!-- 3) Optional icons: defer so layout CSS is available first --&gt;
+&lt;script defer src=&quot;https://unpkg.com/lucide@latest&quot;&gt;&lt;/script&gt;
+
+&lt;!-- 4) Ready gate: run near end of body --&gt;
+&lt;script&gt;
+  (function () {
+    function initIcons() {
+      if (window.lucide &amp;&amp; typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    }
+
+    function revealUi() {
+      document.documentElement.removeAttribute('data-ui-init');
+    }
+
+    function waitForFontsOrTimeout(timeoutMs) {
+      if (!document.fonts || !document.fonts.ready) {
+        return Promise.resolve();
+      }
+      return Promise.race([
+        document.fonts.ready,
+        new Promise((resolve) =&gt; setTimeout(resolve, timeoutMs))
+      ]);
+    }
+
+    window.addEventListener('load', function () {
+      waitForFontsOrTimeout(1200).then(function () {
+        initIcons();
+        revealUi();
+      });
+    });
+  })();
+&lt;/script&gt;</pre>
+          </article>
+          <div class="docs-note">Required CSS guard in your app stylesheet: <code>html[data-ui-init="pending"] body { visibility: hidden; }</code></div>
+        </section>
+
+        <section id="theming" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Theming & Dark Mode</h2>
+          </div>
+          <p>Override CSS custom properties to match your brand. Toggle dark mode by setting <code>data-theme=&quot;dark&quot;</code> on <code>&lt;html&gt;</code>.</p>
+          <div class="docs-example docs-search-item" data-search="theme dark mode variables">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Theme override example</div>
+              <button class="docs-copy" data-copy-target="code-theme">Copy</button>
+            </div>
+            <pre id="code-theme" class="lume-pre docs-code">:root {
+  --lume-accent: #7C3AED;
+  --lume-accent-light: #EDE9FE;
+  --lume-accent-dark: #5B21B6;
+}
+
+/* manual dark mode */
+html[data-theme="dark"] {
+  --lume-bg: #141412;
+  --lume-text: #F0EFE9;
+}</pre>
+          </div>
+          <div class="docs-note">Tip: persist user theme preference with <code>localStorage</code> and apply it before CSS loads. See <a href="#no-flicker">No Flicker Setup</a> for the full startup pattern.</div>
+        </section>
+
+        <section id="tokens" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Design Tokens</h2>
+          </div>
+          <p>
+            Lume exposes colors, spacing, typography, radius, and shadows through CSS custom properties. Build custom
+            themes by overriding these tokens in your app stylesheet.
+          </p>
+
+          <div class="docs-grid cols-2">
+            <article class="docs-example docs-search-item" data-search="tokens colors css variables">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Core color tokens</div>
+                <button class="docs-copy" data-copy-target="code-tokens-colors">Copy</button>
+              </div>
+              <div class="docs-preview">
+                <div class="demo-row" style="gap: 1rem;">
+                  <div class="color-group">
+                    <div class="color-swatch" style="background: var(--lume-text);"></div>
+                    <span>--lume-text</span>
+                  </div>
+                  <div class="color-group">
+                    <div class="color-swatch" style="background: var(--lume-accent);"></div>
+                    <span>--lume-accent</span>
+                  </div>
+                  <div class="color-group">
+                    <div class="color-swatch" style="background: var(--lume-surface);"></div>
+                    <span>--lume-surface</span>
+                  </div>
+                  <div class="color-group">
+                    <div class="color-swatch" style="background: var(--lume-success);"></div>
+                    <span>--lume-success</span>
+                  </div>
+                </div>
+              </div>
+              <pre id="code-tokens-colors" class="lume-pre docs-code">:root {
+  --lume-bg: #FAFAF8;
+  --lume-surface: #F4F3EF;
+  --lume-text: #1C1C1A;
+
+  --lume-accent: #5B5BD6;
+  --lume-accent-light: #EEEEF9;
+  --lume-accent-dark: #3E3E9E;
+
+  --lume-danger: #C0392B;
+  --lume-warning: #B7791F;
+  --lume-info: #1A5C8A;
+  --lume-success: #30A46C;
+}</pre>
+            </article>
+
+            <article class="docs-example docs-search-item" data-search="tokens spacing typography shadows radius">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Type, spacing, radius tokens</div>
+                <button class="docs-copy" data-copy-target="code-tokens-scale">Copy</button>
+              </div>
+              <pre id="code-tokens-scale" class="lume-pre docs-code">:root {
+  --lume-font-sans: 'Instrument Sans', system-ui, sans-serif;
+  --lume-font-serif: 'Lora', Georgia, serif;
+
+  --lume-text-sm: 0.875rem;
+  --lume-text-base: 1rem;
+  --lume-text-lg: 1.125rem;
+
+  --lume-space-2: 0.5rem;
+  --lume-space-4: 1rem;
+  --lume-space-6: 1.5rem;
+
+  --lume-radius: 6px;
+  --lume-radius-lg: 12px;
+
+  --lume-shadow-sm: 0 1px 4px rgba(0,0,0,0.07);
+}</pre>
+            </article>
+          </div>
+
+          <table class="docs-table docs-search-item" data-search="tokens reference variable names">
+            <thead>
+              <tr>
+                <th>Token Group</th>
+                <th>Examples</th>
+                <th>Used In</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Color</td>
+                <td><code>--lume-accent</code>, <code>--lume-border</code></td>
+                <td>All components</td>
+              </tr>
+              <tr>
+                <td>Typography</td>
+                <td><code>--lume-font-sans</code>, <code>--lume-text-lg</code></td>
+                <td>Headings, body, controls</td>
+              </tr>
+              <tr>
+                <td>Spacing</td>
+                <td><code>--lume-space-4</code>, <code>--lume-space-8</code></td>
+                <td>Padding, gaps, stacks</td>
+              </tr>
+              <tr>
+                <td>Radius / Shadow</td>
+                <td><code>--lume-radius-md</code>, <code>--lume-shadow</code></td>
+                <td>Cards, modals, dropdowns</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="typography" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Typography</h2>
+          </div>
+          <p>
+            Use semantic tags where possible and add Lume classes when you want the design-system styling applied.
+            Lume includes display, heading, body, lead, small text, code, and blockquote patterns.
+          </p>
+
+          <div class="docs-example docs-search-item" data-search="typography display h1 h2 lead body small code blockquote">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Typography scale</div>
+              <button class="docs-copy" data-copy-target="code-typography">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4">
+              <div class="lume-display">Display Heading</div>
+              <div class="lume-h1">Heading One</div>
+              <div class="lume-h2">Heading Two</div>
+              <p class="lume-lead">Lead paragraph text for intros and section summaries.</p>
+              <p class="lume-body">Body text for long-form content and interface copy.</p>
+              <p class="lume-small">Small text for metadata and helper copy.</p>
+              <blockquote class="lume-blockquote">Good design is as little design as possible.</blockquote>
+            </div>
+            <pre id="code-typography" class="lume-pre docs-code">&lt;div class=&quot;lume-display&quot;&gt;Display Heading&lt;/div&gt;
+&lt;div class=&quot;lume-h1&quot;&gt;Heading One&lt;/div&gt;
+&lt;div class=&quot;lume-h2&quot;&gt;Heading Two&lt;/div&gt;
+
+&lt;p class=&quot;lume-lead&quot;&gt;Lead paragraph text...&lt;/p&gt;
+&lt;p class=&quot;lume-body&quot;&gt;Body text...&lt;/p&gt;
+&lt;p class=&quot;lume-small&quot;&gt;Small text...&lt;/p&gt;
+
+&lt;blockquote class=&quot;lume-blockquote&quot;&gt;
+  Good design is as little design as possible.
+&lt;/blockquote&gt;</pre>
+          </div>
+
+          <div class="docs-example docs-search-item" data-search="typography prose code pre">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Prose and code</div>
+              <button class="docs-copy" data-copy-target="code-prose">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <article class="lume-prose">
+                <h3 class="lume-h3">Writing with <code>lume-prose</code></h3>
+                <p>Use <code>.lume-prose</code> for article-like content where headings, paragraphs, lists, and blockquotes need consistent spacing.</p>
+                <ul>
+                  <li>Good defaults for body content</li>
+                  <li>Readable line-height and max width</li>
+                  <li>Works well in docs and blogs</li>
+                </ul>
+              </article>
+            </div>
+            <pre id="code-prose" class="lume-pre docs-code">&lt;article class=&quot;lume-prose&quot;&gt;
+  &lt;h2&gt;Article title&lt;/h2&gt;
+  &lt;p&gt;Body paragraph...&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;List item&lt;/li&gt;
+    &lt;li&gt;List item&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/article&gt;</pre>
+          </div>
+
+          <table class="docs-table docs-search-item" data-search="typography class reference">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Purpose</th>
+                <th>Typical Usage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>.lume-display</code></td>
+                <td>Largest serif heading</td>
+                <td>Hero headers</td>
+              </tr>
+              <tr>
+                <td><code>.lume-h1 ... .lume-h6</code></td>
+                <td>Heading scale</td>
+                <td>Section and card titles</td>
+              </tr>
+              <tr>
+                <td><code>.lume-lead</code></td>
+                <td>Emphasized paragraph</td>
+                <td>Intro copy</td>
+              </tr>
+              <tr>
+                <td><code>.lume-prose</code></td>
+                <td>Long-form content wrapper</td>
+                <td>Docs / blog article</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="layout" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Layout</h2>
+          </div>
+          <p>
+            Layout classes cover container sizing, grid columns, and flex helpers. Combine them with spacing utilities
+            for fast page scaffolding.
+          </p>
+
+          <div class="docs-grid cols-2">
+            <article class="docs-example docs-search-item" data-search="layout container grid columns">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Grid columns</div>
+                <button class="docs-copy" data-copy-target="code-layout-grid">Copy</button>
+              </div>
+              <div class="docs-preview">
+                <div class="lume-grid lume-grid-3">
+                  <div class="lume-card lume-card-filled"><div class="lume-card-body">Column 1</div></div>
+                  <div class="lume-card lume-card-filled"><div class="lume-card-body">Column 2</div></div>
+                  <div class="lume-card lume-card-filled"><div class="lume-card-body">Column 3</div></div>
+                </div>
+              </div>
+              <pre id="code-layout-grid" class="lume-pre docs-code">&lt;div class=&quot;lume-grid lume-grid-3&quot;&gt;
+  &lt;div&gt;Column 1&lt;/div&gt;
+  &lt;div&gt;Column 2&lt;/div&gt;
+  &lt;div&gt;Column 3&lt;/div&gt;
+&lt;/div&gt;</pre>
+            </article>
+
+            <article class="docs-example docs-search-item" data-search="layout flex stack gap">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Flex + stack helpers</div>
+                <button class="docs-copy" data-copy-target="code-layout-flex">Copy</button>
+              </div>
+              <div class="docs-preview lume-stack-4">
+                <div class="lume-flex lume-justify-between lume-items-center" style="border:1px solid var(--lume-border); border-radius:var(--lume-radius); padding:var(--lume-space-3);">
+                  <span>Left item</span>
+                  <span class="lume-badge lume-badge-primary">Right item</span>
+                </div>
+                <div class="lume-stack-2" style="border:1px solid var(--lume-border); border-radius:var(--lume-radius); padding:var(--lume-space-3);">
+                  <div>Stack item A</div>
+                  <div>Stack item B</div>
+                  <div>Stack item C</div>
+                </div>
+              </div>
+              <pre id="code-layout-flex" class="lume-pre docs-code">&lt;div class=&quot;lume-flex lume-justify-between lume-items-center&quot;&gt;
+  &lt;span&gt;Left item&lt;/span&gt;
+  &lt;span&gt;Right item&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-stack-2&quot;&gt;
+  &lt;div&gt;Stack item A&lt;/div&gt;
+  &lt;div&gt;Stack item B&lt;/div&gt;
+&lt;/div&gt;</pre>
+            </article>
+          </div>
+
+          <table class="docs-table docs-search-item" data-search="layout class reference container grid flex">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Description</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>.lume-container</code></td>
+                <td>Responsive page container</td>
+                <td>Use <code>-sm/-md/-lg/-xl</code> variants</td>
+              </tr>
+              <tr>
+                <td><code>.lume-grid-2/3/4</code></td>
+                <td>Fixed equal grid columns</td>
+                <td>Collapse at small breakpoints</td>
+              </tr>
+              <tr>
+                <td><code>.lume-flex</code> + helpers</td>
+                <td>Flex row/column alignment</td>
+                <td>Pair with <code>.lume-gap-*</code></td>
+              </tr>
+              <tr>
+                <td><code>.lume-stack-*</code></td>
+                <td>Vertical spacing between children</td>
+                <td>Includes <code>.lume-stack-4</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="buttons" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Buttons</h2>
+          </div>
+          <p>Buttons include solid, outline, ghost, danger, size, pill, block, icon-ready, and gradient/special variants.</p>
+
+          <div class="docs-example docs-search-item" data-search="buttons primary dark outline ghost danger sizes pill block">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Button variants</div>
+              <button class="docs-copy" data-copy-target="code-buttons">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4">
+              <div class="demo-row">
+                <button class="lume-btn lume-btn-primary">Primary</button>
+                <button class="lume-btn lume-btn-dark">Dark</button>
+                <button class="lume-btn lume-btn-danger">Danger</button>
+                <button class="lume-btn lume-btn-outline">Outline</button>
+                <button class="lume-btn lume-btn-outline-primary">Outline Primary</button>
+                <button class="lume-btn lume-btn-ghost">Ghost</button>
+              </div>
+              <div class="demo-row" style="align-items:center;">
+                <button class="lume-btn lume-btn-primary lume-btn-xs">XS</button>
+                <button class="lume-btn lume-btn-primary lume-btn-sm">SM</button>
+                <button class="lume-btn lume-btn-primary">Default</button>
+                <button class="lume-btn lume-btn-primary lume-btn-lg">LG</button>
+                <button class="lume-btn lume-btn-primary lume-btn-xl">XL</button>
+              </div>
+              <button class="lume-btn lume-btn-dark lume-btn-block">Block button</button>
+            </div>
+            <pre id="code-buttons" class="lume-pre docs-code">&lt;button class=&quot;lume-btn lume-btn-primary&quot;&gt;Primary&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-outline&quot;&gt;Outline&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-ghost&quot;&gt;Ghost&lt;/button&gt;
+
+&lt;button class=&quot;lume-btn lume-btn-primary lume-btn-sm&quot;&gt;Small&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-primary lume-btn-pill&quot;&gt;Pill&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-dark lume-btn-block&quot;&gt;Full width&lt;/button&gt;</pre>
+          </div>
+
+          <div class="docs-example docs-search-item" data-search="buttons icons lume-with-icon lume-icon icon button">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Buttons with icons</div>
+              <button class="docs-copy" data-copy-target="code-buttons-icons">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4">
+              <div class="demo-row">
+                <button class="lume-btn lume-btn-primary lume-with-icon">
+                  <i data-lucide="rocket" class="lume-icon"></i>
+                  Launch
+                </button>
+                <button class="lume-btn lume-btn-outline-primary lume-with-icon">
+                  <i data-lucide="sparkles" class="lume-icon"></i>
+                  Upgrade
+                </button>
+                <button class="lume-btn lume-btn-dark lume-with-icon">
+                  Share
+                  <i data-lucide="arrow-right" class="lume-icon"></i>
+                </button>
+                <button class="lume-btn lume-btn-primary lume-btn-pill lume-with-icon">
+                  <i data-lucide="check" class="lume-icon"></i>
+                  Confirm
+                </button>
+                <button class="lume-btn lume-btn-dark lume-btn-icon" aria-label="Favorite">
+                  <i data-lucide="heart" class="lume-icon"></i>
+                </button>
+              </div>
+            </div>
+            <pre id="code-buttons-icons" class="lume-pre docs-code">&lt;button class=&quot;lume-btn lume-btn-primary lume-with-icon&quot;&gt;
+  &lt;i data-lucide=&quot;rocket&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+  Launch
+&lt;/button&gt;
+
+&lt;button class=&quot;lume-btn lume-btn-outline-primary lume-with-icon&quot;&gt;
+  &lt;i data-lucide=&quot;sparkles&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+  Upgrade
+&lt;/button&gt;
+
+&lt;button class=&quot;lume-btn lume-btn-dark lume-with-icon&quot;&gt;
+  Share
+  &lt;i data-lucide=&quot;arrow-right&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+&lt;/button&gt;
+
+&lt;button class=&quot;lume-btn lume-btn-primary lume-btn-pill lume-with-icon&quot;&gt;
+  &lt;i data-lucide=&quot;check&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+  Confirm
+&lt;/button&gt;
+
+&lt;button class=&quot;lume-btn lume-btn-dark lume-btn-icon&quot; aria-label=&quot;Favorite&quot;&gt;
+  &lt;i data-lucide=&quot;heart&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+&lt;/button&gt;</pre>
+          </div>
+
+          <div class="docs-example docs-search-item" data-search="buttons gradient special aurora sunset ocean violet forest hover glow lift filter shift">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Gradient / special buttons</div>
+              <button class="docs-copy" data-copy-target="code-buttons-gradients">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4">
+              <div class="demo-row">
+                <button class="lume-btn lume-btn-gradient-aurora">Aurora Shift</button>
+                <button class="lume-btn lume-btn-gradient-sunset">Sunset Glow</button>
+                <button class="lume-btn lume-btn-gradient-ocean">Ocean Lift</button>
+                <button class="lume-btn lume-btn-gradient-violet">Violet Pulse</button>
+                <button class="lume-btn lume-btn-gradient-forest">Forest Rise</button>
+                <button class="lume-btn lume-btn-gradient-aurora lume-btn-pill">Aurora Pill</button>
+              </div>
+              <div class="demo-row">
+                <button class="lume-btn lume-btn-gradient-sunset lume-btn-no-glow">No Glow</button>
+                <button class="lume-btn lume-btn-gradient-ocean lume-btn-no-lift">No Lift</button>
+                <button class="lume-btn lume-btn-gradient-sunset lume-btn-no-filter">No Filter</button>
+                <button class="lume-btn lume-btn-gradient-aurora lume-btn-no-shift">No Shift</button>
+                <button class="lume-btn lume-btn-gradient-violet lume-btn-fx-off">FX Off</button>
+              </div>
+            </div>
+            <pre id="code-buttons-gradients" class="lume-pre docs-code">&lt;button class=&quot;lume-btn lume-btn-gradient-aurora&quot;&gt;Aurora Shift&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-gradient-sunset&quot;&gt;Sunset Glow&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-gradient-ocean&quot;&gt;Ocean Lift&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-gradient-violet&quot;&gt;Violet Pulse&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-gradient-forest&quot;&gt;Forest Rise&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-gradient-aurora lume-btn-pill&quot;&gt;Aurora Pill&lt;/button&gt;
+
+&lt;!-- Optional effect controls --&gt;
+&lt;button class=&quot;lume-btn lume-btn-gradient-sunset lume-btn-no-glow&quot;&gt;No Glow&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-gradient-ocean lume-btn-no-lift&quot;&gt;No Lift&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-gradient-sunset lume-btn-no-filter&quot;&gt;No Filter&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-gradient-aurora lume-btn-no-shift&quot;&gt;No Shift&lt;/button&gt;
+&lt;button class=&quot;lume-btn lume-btn-gradient-violet lume-btn-fx-off&quot;&gt;FX Off&lt;/button&gt;</pre>
+          </div>
+        </section>
+
+        <section id="forms" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Forms</h2>
+          </div>
+          <p>Form controls include labeled inputs, selects, textarea, check/radio groups, errors, and input groups.</p>
+
+          <div class="docs-example docs-search-item" data-search="forms input select textarea checkbox radio input-group error">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Common form patterns</div>
+              <button class="docs-copy" data-copy-target="code-forms">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <div class="docs-split">
+                <div>
+                  <div class="lume-form-group">
+                    <label class="lume-label lume-label-required">Full name</label>
+                    <input class="lume-input" type="text" placeholder="Jane Smith" />
+                    <span class="lume-hint">As it appears on legal documents.</span>
+                  </div>
+                  <div class="lume-form-group">
+                    <label class="lume-label">Country</label>
+                    <div class="lume-select-wrapper">
+                      <select class="lume-select">
+                        <option>United States</option>
+                        <option>Canada</option>
+                        <option>United Kingdom</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="lume-form-group" style="margin-bottom:0;">
+                    <label class="lume-label">Bio</label>
+                    <textarea class="lume-textarea" rows="3" placeholder="Tell us about yourself..."></textarea>
+                  </div>
+                </div>
+                <div>
+                  <div class="lume-form-group">
+                    <label class="lume-label">Email (error)</label>
+                    <input class="lume-input lume-input-error" type="email" value="not-an-email" />
+                    <span class="lume-error-message">Please enter a valid email address.</span>
+                  </div>
+                  <div class="lume-form-group">
+                    <label class="lume-label">Website</label>
+                    <div class="lume-input-group">
+                      <span class="lume-input-addon">https://</span>
+                      <input class="lume-input" type="text" placeholder="yourdomain.com" />
+                    </div>
+                  </div>
+                  <div class="lume-stack-2">
+                    <label class="lume-check-group"><input type="checkbox" checked /> <span class="lume-check-label">Enable notifications</span></label>
+                    <label class="lume-check-group"><input type="radio" name="docs-plan" checked /> <span class="lume-check-label">Starter plan</span></label>
+                    <label class="lume-check-group"><input type="radio" name="docs-plan" /> <span class="lume-check-label">Pro plan</span></label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <pre id="code-forms" class="lume-pre docs-code">&lt;div class=&quot;lume-form-group&quot;&gt;
+  &lt;label class=&quot;lume-label lume-label-required&quot;&gt;Full name&lt;/label&gt;
+  &lt;input class=&quot;lume-input&quot; type=&quot;text&quot; placeholder=&quot;Jane Smith&quot; /&gt;
+  &lt;span class=&quot;lume-hint&quot;&gt;As it appears on legal documents.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-select-wrapper&quot;&gt;
+  &lt;select class=&quot;lume-select&quot;&gt;
+    &lt;option&gt;United States&lt;/option&gt;
+    &lt;option&gt;Canada&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-input-group&quot;&gt;
+  &lt;span class=&quot;lume-input-addon&quot;&gt;https://&lt;/span&gt;
+  &lt;input class=&quot;lume-input&quot; type=&quot;text&quot; placeholder=&quot;yourdomain.com&quot; /&gt;
+&lt;/div&gt;
+
+&lt;input class=&quot;lume-input lume-input-error&quot; type=&quot;email&quot; value=&quot;not-an-email&quot; /&gt;
+&lt;span class=&quot;lume-error-message&quot;&gt;Please enter a valid email address.&lt;/span&gt;
+
+&lt;label class=&quot;lume-check-group&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; checked /&gt;
+  &lt;span class=&quot;lume-check-label&quot;&gt;Enable notifications&lt;/span&gt;
+&lt;/label&gt;
+&lt;label class=&quot;lume-check-group&quot;&gt;
+  &lt;input type=&quot;radio&quot; name=&quot;plan&quot; checked /&gt;
+  &lt;span class=&quot;lume-check-label&quot;&gt;Starter plan&lt;/span&gt;
+&lt;/label&gt;
+&lt;label class=&quot;lume-check-group&quot;&gt;
+  &lt;input type=&quot;radio&quot; name=&quot;plan&quot; /&gt;
+  &lt;span class=&quot;lume-check-label&quot;&gt;Pro plan&lt;/span&gt;
+&lt;/label&gt;
+&lt;textarea class=&quot;lume-textarea&quot; rows=&quot;3&quot; placeholder=&quot;Tell us about yourself...&quot;&gt;&lt;/textarea&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="cards" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Cards</h2>
+          </div>
+          <p>Cards support default, lifted, and filled surfaces, plus optional header/footer regions.</p>
+
+          <div class="docs-grid cols-2 docs-search-item" data-search="cards default lifted filled header footer">
+            <article class="docs-example">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Card variants</div>
+                <button class="docs-copy" data-copy-target="code-cards">Copy</button>
+              </div>
+              <div class="docs-preview lume-stack-4">
+                <div class="lume-card">
+                  <div class="lume-card-body">
+                    <h3 class="lume-card-title">Default card</h3>
+                    <p class="lume-card-text">Bordered surface for general content.</p>
+                  </div>
+                </div>
+                <div class="lume-card lume-card-lifted">
+                  <div class="lume-card-body">
+                    <h3 class="lume-card-title">Lifted card</h3>
+                    <p class="lume-card-text">Primary content block with shadow.</p>
+                  </div>
+                </div>
+                <div class="lume-card lume-card-filled">
+                  <div class="lume-card-body">
+                    <h3 class="lume-card-title">Filled card</h3>
+                    <p class="lume-card-text">Muted surface for secondary content.</p>
+                  </div>
+                </div>
+              </div>
+              <pre id="code-cards" class="lume-pre docs-code">&lt;div class=&quot;lume-card&quot;&gt;
+  &lt;div class=&quot;lume-card-body&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-card lume-card-lifted&quot;&gt;...&lt;/div&gt;
+&lt;div class=&quot;lume-card lume-card-filled&quot;&gt;...&lt;/div&gt;</pre>
+            </article>
+
+            <article class="docs-example">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Card with header/footer</div>
+                <button class="docs-copy" data-copy-target="code-cards-header-footer">Copy</button>
+              </div>
+              <div class="docs-preview">
+                <div class="lume-card">
+                  <div class="lume-card-header">
+                    <span class="lume-h4" style="font-size:1rem;">Project status</span>
+                    <span class="lume-badge lume-badge-success">Healthy</span>
+                  </div>
+                  <div class="lume-card-body">
+                    <p class="lume-card-text">Daily backups succeeded. No incidents in the last 24 hours.</p>
+                  </div>
+                  <div class="lume-card-footer">
+                    <button class="lume-btn lume-btn-outline lume-btn-sm">View logs</button>
+                    <button class="lume-btn lume-btn-primary lume-btn-sm">Open dashboard</button>
+                  </div>
+                </div>
+              </div>
+              <pre id="code-cards-header-footer" class="lume-pre docs-code">&lt;div class=&quot;lume-card&quot;&gt;
+  &lt;div class=&quot;lume-card-header&quot;&gt;
+    &lt;span class=&quot;lume-h4&quot;&gt;Project status&lt;/span&gt;
+    &lt;span class=&quot;lume-badge lume-badge-success&quot;&gt;Healthy&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;lume-card-body&quot;&gt;
+    &lt;p class=&quot;lume-card-text&quot;&gt;Daily backups succeeded.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;lume-card-footer&quot;&gt;
+    &lt;button class=&quot;lume-btn lume-btn-outline lume-btn-sm&quot;&gt;View logs&lt;/button&gt;
+    &lt;button class=&quot;lume-btn lume-btn-primary lume-btn-sm&quot;&gt;Open dashboard&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+            </article>
+          </div>
+        </section>
+
+        <section id="badges" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Badges & Tags</h2>
+          </div>
+          <p>Use badges for status labels and tags for lightweight categorical chips.</p>
+          <div class="docs-example docs-search-item" data-search="badges tags status dot pill">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Status indicators</div>
+              <button class="docs-copy" data-copy-target="code-badges">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4">
+              <div class="demo-row" style="align-items:center;">
+                <span class="lume-badge lume-badge-primary">Primary</span>
+                <span class="lume-badge lume-badge-success lume-badge-dot lume-badge-pill">Active</span>
+                <span class="lume-badge lume-badge-warning lume-badge-dot lume-badge-pill">Pending</span>
+                <span class="lume-badge lume-badge-danger">Error</span>
+                <span class="lume-badge lume-badge-dark">Internal</span>
+              </div>
+              <div class="demo-row">
+                <span class="lume-tag">Design</span>
+                <span class="lume-tag">Open Source</span>
+                <span class="lume-tag">Roadmap <button class="lume-tag-close" aria-label="Remove">×</button></span>
+              </div>
+            </div>
+            <pre id="code-badges" class="lume-pre docs-code">&lt;span class=&quot;lume-badge lume-badge-success lume-badge-dot lume-badge-pill&quot;&gt;Active&lt;/span&gt;
+&lt;span class=&quot;lume-badge lume-badge-danger&quot;&gt;Error&lt;/span&gt;
+
+&lt;span class=&quot;lume-tag&quot;&gt;Design&lt;/span&gt;
+&lt;span class=&quot;lume-tag&quot;&gt;
+  Roadmap
+  &lt;button class=&quot;lume-tag-close&quot; aria-label=&quot;Remove&quot;&gt;×&lt;/button&gt;
+&lt;/span&gt;</pre>
+          </div>
+        </section>
+
+        <section id="alerts" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Alerts</h2>
+          </div>
+          <p>Alerts communicate inline feedback. Choose severity variant by context and include short action text.</p>
+          <div class="docs-example docs-search-item" data-search="alerts info success warning danger">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Alert variants</div>
+              <button class="docs-copy" data-copy-target="code-alerts">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4">
+              <div class="lume-alert lume-alert-info" role="alert">
+                <div class="lume-alert-content">
+                  <div class="lume-alert-title">Heads up</div>
+                  <div class="lume-alert-body">This is informational context before a user action.</div>
+                </div>
+              </div>
+              <div class="lume-alert lume-alert-success" role="alert">
+                <div class="lume-alert-content">
+                  <div class="lume-alert-title">Saved</div>
+                  <div class="lume-alert-body">Your changes were saved successfully.</div>
+                </div>
+              </div>
+              <div class="lume-alert lume-alert-warning" role="alert">
+                <div class="lume-alert-content">
+                  <div class="lume-alert-title">Usage limit</div>
+                  <div class="lume-alert-body">You are at 90% of your monthly quota.</div>
+                </div>
+              </div>
+              <div class="lume-alert lume-alert-danger" role="alert">
+                <div class="lume-alert-content">
+                  <div class="lume-alert-title">Request failed</div>
+                  <div class="lume-alert-body">Please retry in a few seconds.</div>
+                </div>
+              </div>
+            </div>
+            <pre id="code-alerts" class="lume-pre docs-code">&lt;div class=&quot;lume-alert lume-alert-info&quot; role=&quot;alert&quot;&gt;
+  &lt;div class=&quot;lume-alert-content&quot;&gt;
+    &lt;div class=&quot;lume-alert-title&quot;&gt;Heads up&lt;/div&gt;
+    &lt;div class=&quot;lume-alert-body&quot;&gt;This is informational context.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-alert lume-alert-success&quot; role=&quot;alert&quot;&gt;
+  &lt;div class=&quot;lume-alert-content&quot;&gt;
+    &lt;div class=&quot;lume-alert-title&quot;&gt;Saved&lt;/div&gt;
+    &lt;div class=&quot;lume-alert-body&quot;&gt;Your changes were saved successfully.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-alert lume-alert-warning&quot; role=&quot;alert&quot;&gt;
+  &lt;div class=&quot;lume-alert-content&quot;&gt;
+    &lt;div class=&quot;lume-alert-title&quot;&gt;Usage limit&lt;/div&gt;
+    &lt;div class=&quot;lume-alert-body&quot;&gt;You are at 90% of your quota.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-alert lume-alert-danger&quot; role=&quot;alert&quot;&gt;
+  &lt;div class=&quot;lume-alert-content&quot;&gt;
+    &lt;div class=&quot;lume-alert-title&quot;&gt;Request failed&lt;/div&gt;
+    &lt;div class=&quot;lume-alert-body&quot;&gt;Please retry in a few seconds.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="tables" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Tables</h2>
+          </div>
+          <p>Tables support hover rows, compact density, striped rows, and right-aligned action columns.</p>
+          <div class="docs-example docs-search-item" data-search="tables hover striped compact actions">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Data table</div>
+              <button class="docs-copy" data-copy-target="code-tables">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <div class="lume-table-wrapper">
+                <table class="lume-table lume-table-hover">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Status</th>
+                      <th>Role</th>
+                      <th class="lume-text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Alice Chen</td>
+                      <td><span class="lume-badge lume-badge-success lume-badge-dot lume-badge-pill">Active</span></td>
+                      <td>Admin</td>
+                      <td class="lume-text-right"><button class="lume-btn lume-btn-ghost lume-btn-sm">Edit</button></td>
+                    </tr>
+                    <tr>
+                      <td>Marcus Webb</td>
+                      <td><span class="lume-badge lume-badge-warning lume-badge-dot lume-badge-pill">Pending</span></td>
+                      <td>Editor</td>
+                      <td class="lume-text-right"><button class="lume-btn lume-btn-ghost lume-btn-sm">Edit</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <pre id="code-tables" class="lume-pre docs-code">&lt;div class=&quot;lume-table-wrapper&quot;&gt;
+  &lt;table class=&quot;lume-table lume-table-hover&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th class=&quot;lume-text-right&quot;&gt;Actions&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td&gt;Alice Chen&lt;/td&gt;
+        &lt;td&gt;&lt;span class=&quot;lume-badge lume-badge-success lume-badge-dot lume-badge-pill&quot;&gt;Active&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;Admin&lt;/td&gt;
+        &lt;td class=&quot;text-right&quot;&gt;&lt;button class=&quot;lume-btn lume-btn-ghost lume-btn-sm&quot;&gt;Edit&lt;/button&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="modal" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Modal</h2>
+          </div>
+          <p>Use modal overlays for focused decisions and short form flows. Always provide close controls and escape behavior.</p>
+          <div class="docs-example docs-search-item" data-search="modal overlay dialog aria-modal role dialog">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Basic modal</div>
+              <button class="docs-copy" data-copy-target="code-modal">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <button class="lume-btn lume-btn-primary" onclick="openDocsModal('docs-modal-demo')">Open modal</button>
+
+              <div class="lume-modal-overlay" id="docs-modal-demo" onclick="if(event.target===this)closeDocsModal('docs-modal-demo')">
+                <div class="lume-modal" role="dialog" aria-modal="true" aria-labelledby="docs-modal-title">
+                  <div class="lume-modal-header">
+                    <div class="lume-modal-title" id="docs-modal-title">Confirm deployment</div>
+                    <button class="lume-modal-close" onclick="closeDocsModal('docs-modal-demo')">×</button>
+                  </div>
+                  <div class="lume-modal-body">Deploying now will restart the service for all users. Continue?</div>
+                  <div class="lume-modal-footer">
+                    <button class="lume-btn lume-btn-outline" onclick="closeDocsModal('docs-modal-demo')">Cancel</button>
+                    <button class="lume-btn lume-btn-primary" onclick="closeDocsModal('docs-modal-demo')">Deploy</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <pre id="code-modal" class="lume-pre docs-code">&lt;button class=&quot;lume-btn lume-btn-primary&quot;&gt;Open modal&lt;/button&gt;
+
+&lt;div class=&quot;lume-modal-overlay is-open&quot;&gt;
+  &lt;div class=&quot;lume-modal&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot;&gt;
+    &lt;div class=&quot;lume-modal-header&quot;&gt;...&lt;/div&gt;
+    &lt;div class=&quot;lume-modal-body&quot;&gt;...&lt;/div&gt;
+    &lt;div class=&quot;lume-modal-footer&quot;&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="tooltip" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Tooltip</h2>
+          </div>
+          <p>Tooltips are attribute-driven and work on any inline or block element.</p>
+          <div class="docs-example docs-search-item" data-search="tooltip data-tooltip positions top bottom left right">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Directional tooltips</div>
+              <button class="docs-copy" data-copy-target="code-tooltip">Copy</button>
+            </div>
+            <div class="docs-preview demo-row" style="align-items:center; gap:1.25rem;">
+              <button class="lume-btn lume-btn-outline" data-tooltip="Default tooltip">Top</button>
+              <button class="lume-btn lume-btn-outline" data-tooltip="Tooltip on bottom" data-tooltip-pos="bottom">Bottom</button>
+              <button class="lume-btn lume-btn-outline" data-tooltip="Tooltip on left" data-tooltip-pos="left">Left</button>
+              <button class="lume-btn lume-btn-outline" data-tooltip="Tooltip on right" data-tooltip-pos="right">Right</button>
+            </div>
+            <pre id="code-tooltip" class="lume-pre docs-code">&lt;button data-tooltip=&quot;Default tooltip&quot;&gt;Hover&lt;/button&gt;
+&lt;button data-tooltip=&quot;Bottom&quot; data-tooltip-pos=&quot;bottom&quot;&gt;Hover&lt;/button&gt;
+&lt;button data-tooltip=&quot;Left&quot; data-tooltip-pos=&quot;left&quot;&gt;Hover&lt;/button&gt;
+&lt;button data-tooltip=&quot;Right&quot; data-tooltip-pos=&quot;right&quot;&gt;Hover&lt;/button&gt;</pre>
+          </div>
+        </section>
+
+        <section id="tabs" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Tabs</h2>
+          </div>
+          <p>Tabs are class-toggled components. Activate the selected tab and matching panel by id.</p>
+          <div class="docs-example docs-search-item" data-search="tabs tab-panel is-active">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Underline tabs</div>
+              <button class="docs-copy" data-copy-target="code-tabs">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <div class="lume-tabs" id="docs-tabs-demo">
+                <button class="lume-tab is-active" onclick="docsSwitchTab(this, 'docs-tab-1')">Overview</button>
+                <button class="lume-tab" onclick="docsSwitchTab(this, 'docs-tab-2')">API</button>
+                <button class="lume-tab" onclick="docsSwitchTab(this, 'docs-tab-3')">Notes</button>
+              </div>
+              <div class="lume-tab-panels">
+                <div class="lume-tab-panel is-active" id="docs-tab-1">
+                  <p class="lume-body">Lume tabs are lightweight and framework-agnostic.</p>
+                </div>
+                <div class="lume-tab-panel" id="docs-tab-2">
+                  <p class="lume-body">Toggle <code>.is-active</code> on both tab and panel.</p>
+                </div>
+                <div class="lume-tab-panel" id="docs-tab-3">
+                  <p class="lume-body">Prefer keyboard navigation with focus-visible styles enabled.</p>
+                </div>
+              </div>
+            </div>
+            <pre id="code-tabs" class="lume-pre docs-code">&lt;div class=&quot;lume-tabs&quot;&gt;
+  &lt;button class=&quot;lume-tab is-active&quot;&gt;Overview&lt;/button&gt;
+  &lt;button class=&quot;lume-tab&quot;&gt;API&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class=&quot;lume-tab-panels&quot;&gt;
+  &lt;div class=&quot;lume-tab-panel is-active&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;lume-tab-panel&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="accordion" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Accordion</h2>
+          </div>
+          <p>Accordions use native <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code>, so they work without JavaScript and are accessible by default.</p>
+          <div class="docs-example docs-search-item" data-search="accordion details summary">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Details accordion</div>
+              <button class="docs-copy" data-copy-target="code-accordion">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <div class="lume-accordion" style="max-width: 720px;">
+                <details class="lume-accordion-item" open>
+                  <summary class="lume-accordion-trigger">How do I install Lume?</summary>
+                  <div class="lume-accordion-body">Use CDN or npm and import one stylesheet into your app.</div>
+                </details>
+                <details class="lume-accordion-item">
+                  <summary class="lume-accordion-trigger">How do I customize colors?</summary>
+                  <div class="lume-accordion-body">Override CSS variables like <code>--lume-accent</code>.</div>
+                </details>
+              </div>
+            </div>
+            <pre id="code-accordion" class="lume-pre docs-code">&lt;div class=&quot;lume-accordion&quot;&gt;
+  &lt;details class=&quot;lume-accordion-item&quot; open&gt;
+    &lt;summary class=&quot;lume-accordion-trigger&quot;&gt;Question&lt;/summary&gt;
+    &lt;div class=&quot;lume-accordion-body&quot;&gt;Answer&lt;/div&gt;
+  &lt;/details&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="dropdown" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Dropdown</h2>
+          </div>
+          <p>Dropdown menus are toggled by adding/removing <code>.is-open</code> on the parent <code>.lume-dropdown</code>.</p>
+          <div class="docs-example docs-search-item" data-search="dropdown menu is-open">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Action menu</div>
+              <button class="docs-copy" data-copy-target="code-dropdown">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <div class="lume-dropdown" id="docs-dd-1">
+                <button class="lume-btn lume-btn-outline" onclick="toggleDocsDropdown('docs-dd-1')">Actions ▾</button>
+                <div class="lume-dropdown-menu">
+                  <div class="lume-dropdown-header">Manage</div>
+                  <button class="lume-dropdown-item">Edit profile</button>
+                  <button class="lume-dropdown-item">Billing</button>
+                  <div class="lume-dropdown-divider"></div>
+                  <button class="lume-dropdown-item lume-dropdown-item-danger">Delete account</button>
+                </div>
+              </div>
+            </div>
+            <pre id="code-dropdown" class="lume-pre docs-code">&lt;div class=&quot;lume-dropdown is-open&quot;&gt;
+  &lt;button class=&quot;lume-btn lume-btn-outline&quot;&gt;Actions ▾&lt;/button&gt;
+  &lt;div class=&quot;lume-dropdown-menu&quot;&gt;
+    &lt;button class=&quot;lume-dropdown-item&quot;&gt;Edit profile&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="progress" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Progress & Spinner</h2>
+          </div>
+          <p>Use progress bars for known completion states and spinners for indeterminate loading states.</p>
+          <div class="docs-example docs-search-item" data-search="progress spinner loading striped success warning">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Loading indicators</div>
+              <button class="docs-copy" data-copy-target="code-progress">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4" style="max-width: 560px;">
+              <div>
+                <div class="lume-progress"><div class="lume-progress-bar" style="width: 72%;"></div></div>
+              </div>
+              <div>
+                <div class="lume-progress"><div class="lume-progress-bar lume-progress-bar-striped" style="width: 45%;"></div></div>
+              </div>
+              <div class="demo-row" style="align-items:center; gap:1rem;">
+                <div class="lume-spinner lume-spinner-sm"></div>
+                <div class="lume-spinner"></div>
+                <div class="lume-spinner lume-spinner-lg"></div>
+                <button class="lume-btn lume-btn-primary" disabled>
+                  <div class="lume-spinner lume-spinner-sm" style="border-color: rgba(255,255,255,0.3); border-top-color: #fff;"></div>
+                  Loading...
+                </button>
+              </div>
+            </div>
+            <pre id="code-progress" class="lume-pre docs-code">&lt;div class=&quot;lume-progress&quot;&gt;
+  &lt;div class=&quot;lume-progress-bar&quot; style=&quot;width: 72%;&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-progress&quot;&gt;
+  &lt;div class=&quot;lume-progress-bar lume-progress-bar-striped&quot; style=&quot;width: 45%;&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-spinner lume-spinner-sm&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;lume-spinner&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;lume-spinner lume-spinner-lg&quot;&gt;&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="avatar" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Avatar</h2>
+          </div>
+          <p>Avatars support initials or image content, size modifiers, status dots, and overlapping groups.</p>
+          <div class="docs-example docs-search-item" data-search="avatar initials image size group status">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Avatar patterns</div>
+              <button class="docs-copy" data-copy-target="code-avatar">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4">
+              <div class="demo-row" style="align-items:center; gap:1rem;">
+                <div class="lume-avatar lume-avatar-sm">SM</div>
+                <div class="lume-avatar">AC</div>
+                <div class="lume-avatar lume-avatar-lg">MW</div>
+                <div class="lume-avatar lume-avatar-xl">PN</div>
+              </div>
+              <div class="demo-row" style="align-items:center; gap:1.1rem;">
+                <div class="lume-avatar-wrapper">
+                  <div class="lume-avatar lume-avatar-lg">AC</div>
+                  <div class="lume-avatar-status"></div>
+                </div>
+                <div class="lume-avatar-wrapper">
+                  <div class="lume-avatar lume-avatar-lg">MW</div>
+                  <div class="lume-avatar-status lume-avatar-status-busy"></div>
+                </div>
+                <div class="lume-avatar-group">
+                  <div class="lume-avatar">JD</div>
+                  <div class="lume-avatar">KR</div>
+                  <div class="lume-avatar">TM</div>
+                  <div class="lume-avatar">+2</div>
+                </div>
+              </div>
+            </div>
+            <pre id="code-avatar" class="lume-pre docs-code">&lt;div class=&quot;lume-avatar&quot;&gt;AC&lt;/div&gt;
+&lt;div class=&quot;lume-avatar lume-avatar-lg&quot;&gt;MW&lt;/div&gt;
+
+&lt;div class=&quot;lume-avatar-wrapper&quot;&gt;
+  &lt;div class=&quot;lume-avatar lume-avatar-lg&quot;&gt;AC&lt;/div&gt;
+  &lt;div class=&quot;lume-avatar-status&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-avatar-group&quot;&gt;
+  &lt;div class=&quot;lume-avatar&quot;&gt;A&lt;/div&gt;
+  &lt;div class=&quot;lume-avatar&quot;&gt;B&lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="toast" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Toast</h2>
+          </div>
+          <p>Toasts are temporary notifications. Use semantic variants for success, info, warning, and error feedback.</p>
+          <div class="docs-example docs-search-item" data-search="toast notification snackbar success warning danger info">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Toast variants</div>
+              <button class="docs-copy" data-copy-target="code-toast">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4" style="max-width: 460px;">
+              <div class="lume-toast lume-toast-success" style="position: relative; animation: none;">
+                <div class="lume-toast-content">
+                  <div class="lume-toast-title">Saved</div>
+                  <div class="lume-toast-body">Your changes have been saved.</div>
+                </div>
+                <button class="lume-toast-close">×</button>
+              </div>
+              <div class="lume-toast lume-toast-danger" style="position: relative; animation: none;">
+                <div class="lume-toast-content">
+                  <div class="lume-toast-title">Upload failed</div>
+                  <div class="lume-toast-body">File exceeds size limit.</div>
+                </div>
+                <button class="lume-toast-close">×</button>
+              </div>
+            </div>
+            <pre id="code-toast" class="lume-pre docs-code">&lt;div class=&quot;lume-toast lume-toast-success&quot;&gt;
+  &lt;div class=&quot;lume-toast-content&quot;&gt;
+    &lt;div class=&quot;lume-toast-title&quot;&gt;Saved&lt;/div&gt;
+    &lt;div class=&quot;lume-toast-body&quot;&gt;Your changes have been saved.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-toast lume-toast-danger&quot;&gt;
+  &lt;div class=&quot;lume-toast-content&quot;&gt;
+    &lt;div class=&quot;lume-toast-title&quot;&gt;Upload failed&lt;/div&gt;
+    &lt;div class=&quot;lume-toast-body&quot;&gt;File exceeds size limit.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="breadcrumb" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Breadcrumb</h2>
+          </div>
+          <p>Breadcrumbs communicate location and hierarchy. Keep labels short and link only ancestor segments.</p>
+          <div class="docs-example docs-search-item" data-search="breadcrumb navigation hierarchy">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Breadcrumb trail</div>
+              <button class="docs-copy" data-copy-target="code-breadcrumb">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <nav class="lume-breadcrumb" aria-label="Breadcrumb">
+                <span class="lume-breadcrumb-item"><a href="#">Home</a></span>
+                <span class="lume-breadcrumb-item"><a href="#">Products</a></span>
+                <span class="lume-breadcrumb-item">Documentation</span>
+              </nav>
+            </div>
+            <pre id="code-breadcrumb" class="lume-pre docs-code">&lt;nav class=&quot;lume-breadcrumb&quot; aria-label=&quot;Breadcrumb&quot;&gt;
+  &lt;span class=&quot;lume-breadcrumb-item&quot;&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/span&gt;
+  &lt;span class=&quot;lume-breadcrumb-item&quot;&gt;&lt;a href=&quot;#&quot;&gt;Products&lt;/a&gt;&lt;/span&gt;
+  &lt;span class=&quot;lume-breadcrumb-item&quot;&gt;Documentation&lt;/span&gt;
+&lt;/nav&gt;</pre>
+          </div>
+        </section>
+
+        <section id="pagination" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Pagination</h2>
+          </div>
+          <p>Pagination items support active and disabled state classes. Pair with server-side or client-side paging logic.</p>
+          <div class="docs-example docs-search-item" data-search="pagination active disabled pages">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Page controls</div>
+              <button class="docs-copy" data-copy-target="code-pagination">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <nav class="lume-pagination" aria-label="Pagination">
+                <a class="lume-page-item is-disabled" href="#">← Prev</a>
+                <a class="lume-page-item is-active" href="#">1</a>
+                <a class="lume-page-item" href="#">2</a>
+                <a class="lume-page-item" href="#">3</a>
+                <span class="lume-page-ellipsis">…</span>
+                <a class="lume-page-item" href="#">12</a>
+                <a class="lume-page-item" href="#">Next →</a>
+              </nav>
+            </div>
+            <pre id="code-pagination" class="lume-pre docs-code">&lt;nav class=&quot;lume-pagination&quot;&gt;
+  &lt;a class=&quot;lume-page-item is-disabled&quot;&gt;← Prev&lt;/a&gt;
+  &lt;a class=&quot;lume-page-item is-active&quot;&gt;1&lt;/a&gt;
+  &lt;a class=&quot;lume-page-item&quot;&gt;2&lt;/a&gt;
+&lt;/nav&gt;</pre>
+          </div>
+        </section>
+
+        <section id="skeleton" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Skeleton</h2>
+          </div>
+          <p>Skeleton loaders preserve layout during async fetches and reduce perceived latency.</p>
+          <div class="docs-example docs-search-item" data-search="skeleton shimmer loader placeholder">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Skeleton card</div>
+              <button class="docs-copy" data-copy-target="code-skeleton">Copy</button>
+            </div>
+            <div class="docs-preview" style="max-width: 340px;">
+              <div class="lume-skeleton-card">
+                <div class="lume-skeleton lume-skeleton-card-img"></div>
+                <div class="lume-skeleton-card-body">
+                  <div class="lume-skeleton lume-skeleton-heading"></div>
+                  <div class="lume-skeleton lume-skeleton-text"></div>
+                  <div class="lume-skeleton lume-skeleton-text"></div>
+                  <div class="lume-skeleton lume-skeleton-btn" style="margin-top: var(--lume-space-4);"></div>
+                </div>
+              </div>
+            </div>
+            <pre id="code-skeleton" class="lume-pre docs-code">&lt;div class=&quot;lume-skeleton-card&quot;&gt;
+  &lt;div class=&quot;lume-skeleton lume-skeleton-card-img&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;lume-skeleton-card-body&quot;&gt;
+    &lt;div class=&quot;lume-skeleton lume-skeleton-heading&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;lume-skeleton lume-skeleton-text&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="callout" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Callout</h2>
+          </div>
+          <p>Callouts are persistent emphasis blocks for guidance, warnings, and important contextual information.</p>
+          <div class="docs-example docs-search-item" data-search="callout info warning success danger">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Callout variants</div>
+              <button class="docs-copy" data-copy-target="code-callout">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4">
+              <div class="lume-callout">
+                <div class="lume-callout-title">Default callout</div>
+                Use callouts for persistent notes that should remain visible.
+              </div>
+              <div class="lume-callout lume-callout-info">
+                <div class="lume-callout-title">Info</div>
+                This endpoint is rate limited to 100 requests per minute.
+              </div>
+              <div class="lume-callout lume-callout-warning">
+                <div class="lume-callout-title">Warning</div>
+                Migrating now may restart active sessions.
+              </div>
+            </div>
+            <pre id="code-callout" class="lume-pre docs-code">&lt;div class=&quot;lume-callout&quot;&gt;
+  &lt;div class=&quot;lume-callout-title&quot;&gt;Default callout&lt;/div&gt;
+  Use callouts for persistent notes.
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-callout lume-callout-info&quot;&gt;
+  &lt;div class=&quot;lume-callout-title&quot;&gt;Info&lt;/div&gt;
+  This endpoint is rate limited.
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-callout lume-callout-warning&quot;&gt;
+  &lt;div class=&quot;lume-callout-title&quot;&gt;Warning&lt;/div&gt;
+  Migrating now may restart active sessions.
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="list-group" class="docs-section">
+          <div class="docs-section-head">
+            <h2>List Group</h2>
+          </div>
+          <p>List groups are bordered vertical collections for settings menus, action lists, and simple data groups.</p>
+          <div class="docs-example docs-search-item" data-search="list group item active danger">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Settings list</div>
+              <button class="docs-copy" data-copy-target="code-list-group">Copy</button>
+            </div>
+            <div class="docs-preview" style="max-width: 560px;">
+              <div class="lume-list">
+                <div class="lume-list-header">Account</div>
+                <a href="#" class="lume-list-item lume-list-item-action">Profile</a>
+                <a href="#" class="lume-list-item lume-list-item-action lume-list-item-active">Preferences</a>
+                <a href="#" class="lume-list-item lume-list-item-action">Notifications</a>
+                <button class="lume-list-item lume-list-item-action lume-list-item-danger" style="width:100%; text-align:left; border:none; background:transparent; border-radius:0;">Delete account</button>
+              </div>
+            </div>
+            <pre id="code-list-group" class="lume-pre docs-code">&lt;div class=&quot;lume-list&quot;&gt;
+  &lt;div class=&quot;lume-list-header&quot;&gt;Account&lt;/div&gt;
+  &lt;a class=&quot;lume-list-item lume-list-item-action&quot;&gt;Profile&lt;/a&gt;
+  &lt;a class=&quot;lume-list-item lume-list-item-action lume-list-item-active&quot;&gt;Preferences&lt;/a&gt;
+  &lt;button class=&quot;lume-list-item lume-list-item-action lume-list-item-danger&quot;&gt;Delete account&lt;/button&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="stat" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Stat / KPI</h2>
+          </div>
+          <p>Stat cards present key metrics with trend context in dashboards and analytics screens.</p>
+          <div class="docs-example docs-search-item" data-search="stat kpi metric trend up down">
+            <div class="docs-example-head">
+              <div class="docs-example-title">KPI cards</div>
+              <button class="docs-copy" data-copy-target="code-stat">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <div class="lume-grid lume-grid-3">
+                <div class="lume-stat">
+                  <div class="lume-stat-label">Revenue</div>
+                  <div class="lume-stat-value">$84.2k</div>
+                  <div class="lume-stat-trend lume-stat-trend-up">12.5% MoM</div>
+                </div>
+                <div class="lume-stat">
+                  <div class="lume-stat-label">Churn</div>
+                  <div class="lume-stat-value">2.4%</div>
+                  <div class="lume-stat-trend lume-stat-trend-down">0.3% MoM</div>
+                </div>
+                <div class="lume-stat">
+                  <div class="lume-stat-label">Uptime</div>
+                  <div class="lume-stat-value">99.9%</div>
+                  <div class="lume-stat-trend lume-stat-trend-neutral">No change</div>
+                </div>
+              </div>
+            </div>
+            <pre id="code-stat" class="lume-pre docs-code">&lt;div class=&quot;lume-stat&quot;&gt;
+  &lt;div class=&quot;lume-stat-label&quot;&gt;Revenue&lt;/div&gt;
+  &lt;div class=&quot;lume-stat-value&quot;&gt;$84.2k&lt;/div&gt;
+  &lt;div class=&quot;lume-stat-trend lume-stat-trend-up&quot;&gt;12.5% MoM&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-stat&quot;&gt;
+  &lt;div class=&quot;lume-stat-label&quot;&gt;Churn&lt;/div&gt;
+  &lt;div class=&quot;lume-stat-value&quot;&gt;2.4%&lt;/div&gt;
+  &lt;div class=&quot;lume-stat-trend lume-stat-trend-down&quot;&gt;0.3% MoM&lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="empty" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Empty State</h2>
+          </div>
+          <p>Empty states guide users when no data exists yet. Include a clear action to unblock progress.</p>
+          <div class="docs-example docs-search-item" data-search="empty state zero data no results">
+            <div class="docs-example-head">
+              <div class="docs-example-title">No data placeholder</div>
+              <button class="docs-copy" data-copy-target="code-empty">Copy</button>
+            </div>
+            <div class="docs-preview" style="border:1px solid var(--lume-border); border-radius:var(--lume-radius-lg);">
+              <div class="lume-empty">
+                <div class="lume-empty-icon">📂</div>
+                <div class="lume-empty-title">No files yet</div>
+                <div class="lume-empty-body">Upload your first file to begin collaborating with your team.</div>
+                <div class="lume-empty-actions">
+                  <button class="lume-btn lume-btn-primary">Upload file</button>
+                  <button class="lume-btn lume-btn-outline">Learn more</button>
+                </div>
+              </div>
+            </div>
+            <pre id="code-empty" class="lume-pre docs-code">&lt;div class=&quot;lume-empty&quot;&gt;
+  &lt;div class=&quot;lume-empty-icon&quot;&gt;📂&lt;/div&gt;
+  &lt;div class=&quot;lume-empty-title&quot;&gt;No files yet&lt;/div&gt;
+  &lt;div class=&quot;lume-empty-body&quot;&gt;Upload your first file...&lt;/div&gt;
+  &lt;div class=&quot;lume-empty-actions&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="stepper" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Stepper</h2>
+          </div>
+          <p>Steppers communicate progress in multi-step flows. Use completed, active, and optional error state classes.</p>
+          <div class="docs-example docs-search-item" data-search="stepper steps wizard completed active error vertical">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Horizontal + vertical stepper</div>
+              <button class="docs-copy" data-copy-target="code-stepper">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-6">
+              <div class="lume-steps">
+                <div class="lume-step lume-step-completed"><div class="lume-step-indicator"></div><div class="lume-step-title">Account</div></div>
+                <div class="lume-step lume-step-completed"><div class="lume-step-indicator"></div><div class="lume-step-title">Profile</div></div>
+                <div class="lume-step lume-step-active"><div class="lume-step-indicator"></div><div class="lume-step-title">Billing</div></div>
+                <div class="lume-step"><div class="lume-step-indicator"></div><div class="lume-step-title">Review</div></div>
+              </div>
+              <div class="lume-steps lume-steps-vertical" style="max-width: 320px;">
+                <div class="lume-step lume-step-completed"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Order placed</div></div></div>
+                <div class="lume-step lume-step-active"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Shipped</div></div></div>
+                <div class="lume-step"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Delivered</div></div></div>
+              </div>
+            </div>
+            <pre id="code-stepper" class="lume-pre docs-code">&lt;div class=&quot;lume-steps&quot;&gt;
+  &lt;div class=&quot;lume-step lume-step-completed&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;lume-step lume-step-active&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;lume-step&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;lume-steps lume-steps-vertical&quot;&gt;
+  &lt;div class=&quot;lume-step lume-step-completed&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;lume-step lume-step-active&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;lume-step&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="drawer" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Drawer</h2>
+          </div>
+          <p>Drawers slide in from screen edges and work well for secondary workflows or contextual editing.</p>
+          <div class="docs-example docs-search-item" data-search="drawer sidebar left right overlay">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Right drawer</div>
+              <button class="docs-copy" data-copy-target="code-drawer">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <button class="lume-btn lume-btn-primary" onclick="openDocsDrawer('docs-drawer-demo')">Open drawer</button>
+
+              <div class="lume-drawer-overlay" id="docs-drawer-overlay" onclick="closeDocsDrawers()"></div>
+              <div class="lume-drawer lume-drawer-right" id="docs-drawer-demo">
+                <div class="lume-drawer-header">
+                  <div class="lume-drawer-title">Edit profile</div>
+                  <button class="lume-drawer-close" onclick="closeDocsDrawers()">×</button>
+                </div>
+                <div class="lume-drawer-body">
+                  <div class="lume-form-group">
+                    <label class="lume-label">Display name</label>
+                    <input class="lume-input" type="text" value="Alice Chen" />
+                  </div>
+                </div>
+                <div class="lume-drawer-footer">
+                  <button class="lume-btn lume-btn-outline" onclick="closeDocsDrawers()">Cancel</button>
+                  <button class="lume-btn lume-btn-primary" onclick="closeDocsDrawers()">Save</button>
+                </div>
+              </div>
+            </div>
+            <pre id="code-drawer" class="lume-pre docs-code">&lt;div class=&quot;lume-drawer-overlay is-open&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;lume-drawer lume-drawer-right is-open&quot;&gt;
+  &lt;div class=&quot;lume-drawer-header&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;lume-drawer-body&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </section>
+
+        <section id="kbd" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Keyboard / Kbd</h2>
+          </div>
+          <p>Use semantic <code>&lt;kbd&gt;</code> for shortcuts in docs and app help UI.</p>
+          <div class="docs-example docs-search-item" data-search="kbd keyboard shortcuts">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Shortcut tokens</div>
+              <button class="docs-copy" data-copy-target="code-kbd">Copy</button>
+            </div>
+            <div class="docs-preview lume-stack-4">
+              <p class="lume-body">Open command palette with <kbd>⌘</kbd> <kbd>K</kbd>.</p>
+              <div class="demo-row">
+                <kbd>Ctrl</kbd><kbd>Shift</kbd><kbd>P</kbd><kbd>Esc</kbd><kbd>Enter</kbd><kbd>Tab</kbd>
+              </div>
+            </div>
+            <pre id="code-kbd" class="lume-pre docs-code">&lt;p&gt;Open command palette with &lt;kbd&gt;⌘&lt;/kbd&gt; &lt;kbd&gt;K&lt;/kbd&gt;.&lt;/p&gt;</pre>
+          </div>
+        </section>
+
+        <section id="utilities" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Utilities</h2>
+          </div>
+          <p>Use utilities for small one-off adjustments. Keep usage intentional to preserve readability.</p>
+
+          <table class="docs-table docs-search-item" data-search="utilities spacing display overflow position z-index opacity cursor transition aspect">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Utilities</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Spacing</td>
+                <td><code>lume-mt-*</code>, <code>lume-mb-*</code>, <code>lume-p-*</code>, <code>lume-px-*</code>, <code>lume-py-*</code></td>
+                <td><code>class="lume-mt-4 lume-p-4"</code></td>
+              </tr>
+              <tr>
+                <td>Display / Flex</td>
+                <td><code>lume-d-flex</code>, <code>lume-d-grid</code>, <code>lume-flex-1</code>, <code>lume-gap-*</code></td>
+                <td><code>class="lume-d-flex lume-gap-4"</code></td>
+              </tr>
+              <tr>
+                <td>Overflow / Position</td>
+                <td><code>lume-overflow-auto</code>, <code>lume-pos-relative</code>, <code>lume-pos-sticky</code></td>
+                <td><code>class="lume-pos-sticky lume-inset-0"</code></td>
+              </tr>
+              <tr>
+                <td>Z-index</td>
+                <td><code>lume-z-dropdown</code>, <code>lume-z-modal</code>, <code>lume-z-toast</code></td>
+                <td>Layer orchestration</td>
+              </tr>
+              <tr>
+                <td>Opacity / Cursor</td>
+                <td><code>lume-opacity-50</code>, <code>lume-cursor-not-allowed</code></td>
+                <td>Disabled states</td>
+              </tr>
+              <tr>
+                <td>Transition / Aspect</td>
+                <td><code>lume-transition-fast</code>, <code>lume-aspect-video</code></td>
+                <td>Smooth state + media boxes</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="docs-example docs-search-item" data-search="utilities example lume-aspect-video lume-transition-fast">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Utility composition example</div>
+              <button class="docs-copy" data-copy-target="code-utilities">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <div class="lume-d-grid lume-gap-4" style="grid-template-columns: repeat(2, minmax(0,1fr));">
+                <div class="lume-rounded-lg lume-overflow-hidden border" style="border:1px solid var(--lume-border);">
+                  <div class="lume-aspect-video" style="background: var(--lume-surface);"></div>
+                  <div class="lume-p-4">
+                    <div class="lume-font-semibold lume-mb-2">Utility-first card shell</div>
+                    <p class="lume-text-muted lume-text-sm">Composed from utility classes only.</p>
+                  </div>
+                </div>
+                <button class="lume-btn lume-btn-outline lume-w-full lume-transition-fast">Action</button>
+              </div>
+            </div>
+            <pre id="code-utilities" class="lume-pre docs-code">&lt;div class=&quot;lume-rounded-lg lume-overflow-hidden&quot;&gt;
+  &lt;div class=&quot;lume-aspect-video&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;lume-p-4&quot;&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;button class=&quot;lume-btn lume-btn-outline w-full transition-fast&quot;&gt;
+  Action
+&lt;/button&gt;</pre>
+          </div>
+        </section>
+
+        <section id="icon-usage" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Icon Set &amp; Mapping</h2>
+          </div>
+          <p>
+            Lume includes icon helper classes so icons can be dropped into buttons, pills, badges, tags,
+            tabs, dropdown items, list rows, and breadcrumb links with consistent alignment and sizing.
+          </p>
+          <p>
+            The docs and admin demo use <strong>Lucide</strong> via <code>data-lucide</code> attributes. Lume itself is icon-library agnostic;
+            these classes work with inline SVGs from any icon set.
+          </p>
+
+          <table class="docs-table docs-search-item" data-search="icons icon map lucide data-lucide admin demo mapping">
+            <thead>
+              <tr>
+                <th>UI Meaning</th>
+                <th>Mapped Icon (<code>data-lucide</code>)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Dashboard</td><td><code>layout-dashboard</code></td></tr>
+              <tr><td>Analytics</td><td><code>bar-chart-3</code></td></tr>
+              <tr><td>Users</td><td><code>users</code></td></tr>
+              <tr><td>Orders</td><td><code>shopping-cart</code></td></tr>
+              <tr><td>Billing</td><td><code>credit-card</code></td></tr>
+              <tr><td>Audit Logs</td><td><code>history</code></td></tr>
+              <tr><td>Support Tickets</td><td><code>life-buoy</code></td></tr>
+              <tr><td>Integrations</td><td><code>plug-zap</code></td></tr>
+              <tr><td>Settings</td><td><code>settings</code></td></tr>
+              <tr><td>Library Docs</td><td><code>book-open</code></td></tr>
+              <tr><td>Showcase</td><td><code>sparkles</code></td></tr>
+              <tr><td>Menu toggle</td><td><code>menu</code></td></tr>
+              <tr><td>Search field</td><td><code>search</code></td></tr>
+            </tbody>
+          </table>
+
+          <table class="docs-table docs-search-item" data-search="icons lume-icon lume-with-icon icon-leading icon-trailing lucide">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>.lume-icon</code></td>
+                <td>Base icon size helper for inline icons</td>
+              </tr>
+              <tr>
+                <td><code>.lume-icon-sm</code> / <code>.lume-icon-lg</code></td>
+                <td>Optional icon size modifiers</td>
+              </tr>
+              <tr>
+                <td><code>.lume-with-icon</code></td>
+                <td>Align text + icon with consistent gap</td>
+              </tr>
+              <tr>
+                <td><code>.lume-icon-leading</code> / <code>.lume-icon-trailing</code></td>
+                <td>Optional directional spacing nudges</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="docs-grid cols-2">
+            <article class="docs-example docs-search-item" data-search="icon button pill badge tag">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Buttons, pills, badges, tags</div>
+                <button class="docs-copy" data-copy-target="code-icons-core">Copy</button>
+              </div>
+              <pre id="code-icons-core" class="lume-pre docs-code">&lt;button class=&quot;lume-btn lume-btn-primary lume-with-icon&quot;&gt;
+  &lt;i data-lucide=&quot;rocket&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+  Launch
+&lt;/button&gt;
+
+&lt;button class=&quot;lume-btn lume-btn-outline-primary lume-btn-pill lume-with-icon&quot;&gt;
+  &lt;i data-lucide=&quot;sparkles&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+  Pro Pill
+&lt;/button&gt;
+
+&lt;span class=&quot;lume-badge lume-badge-info lume-badge-pill lume-with-icon&quot;&gt;
+  &lt;i data-lucide=&quot;shield-check&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+  Verified
+&lt;/span&gt;
+
+&lt;span class=&quot;lume-tag lume-with-icon&quot;&gt;
+  &lt;i data-lucide=&quot;tag&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+  Release
+&lt;/span&gt;</pre>
+            </article>
+
+            <article class="docs-example docs-search-item" data-search="icon tabs dropdown list breadcrumb lucide createIcons">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Tabs, dropdowns, list items, breadcrumb</div>
+                <button class="docs-copy" data-copy-target="code-icons-nav">Copy</button>
+              </div>
+              <pre id="code-icons-nav" class="lume-pre docs-code">&lt;button class=&quot;lume-tab is-active&quot;&gt;
+  &lt;i data-lucide=&quot;layout-dashboard&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+  Overview
+&lt;/button&gt;
+
+&lt;button class=&quot;lume-dropdown-item&quot;&gt;
+  &lt;i data-lucide=&quot;user-cog&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+  Account settings
+&lt;/button&gt;
+
+&lt;a href=&quot;#&quot; class=&quot;lume-list-item lume-list-item-action&quot;&gt;
+  &lt;i data-lucide=&quot;folder-open&quot; class=&quot;lume-icon&quot;&gt;&lt;/i&gt;
+  Projects
+&lt;/a&gt;
+
+&lt;span class=&quot;lume-breadcrumb-item&quot;&gt;
+  &lt;a href=&quot;#&quot; class=&quot;lume-with-icon&quot;&gt;
+    &lt;i data-lucide=&quot;home&quot; class=&quot;lume-icon lume-icon-sm&quot;&gt;&lt;/i&gt;
+    Home
+  &lt;/a&gt;
+&lt;/span&gt;
+
+&lt;!-- Run once after DOM is ready --&gt;
+&lt;script&gt;window.lucide?.createIcons();&lt;/script&gt;</pre>
+            </article>
+          </div>
+        </section>
+
+        <section id="javascript" class="docs-section">
+          <div class="docs-section-head">
+            <h2>JavaScript Patterns</h2>
+          </div>
+          <p>
+            Most Lume components are CSS-only. Interactive components need tiny JS helpers that toggle classes and
+            manage focus/escape behavior.
+          </p>
+
+          <div class="docs-grid cols-2">
+            <article class="docs-example docs-search-item" data-search="javascript tabs class toggling">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Tabs helper</div>
+                <button class="docs-copy" data-copy-target="code-js-tabs">Copy</button>
+              </div>
+              <pre id="code-js-tabs" class="lume-pre docs-code">function switchTab(tab, panelId) {
+  const tabBar = tab.parentElement;
+  const panels = tabBar.nextElementSibling;
+  tabBar.querySelectorAll('.lume-tab').forEach(t =&gt; t.classList.remove('is-active'));
+  panels.querySelectorAll('.lume-tab-panel').forEach(p =&gt; p.classList.remove('is-active'));
+  tab.classList.add('is-active');
+  document.getElementById(panelId).classList.add('is-active');
+}</pre>
+            </article>
+
+            <article class="docs-example docs-search-item" data-search="javascript dropdown outside click">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Dropdown outside-click</div>
+                <button class="docs-copy" data-copy-target="code-js-dropdown">Copy</button>
+              </div>
+              <pre id="code-js-dropdown" class="lume-pre docs-code">document.addEventListener('click', (event) =&gt; {
+  document.querySelectorAll('.lume-dropdown.is-open').forEach((menu) =&gt; {
+    if (!menu.contains(event.target)) {
+      menu.classList.remove('is-open');
+    }
+  });
+});</pre>
+            </article>
+          </div>
+
+          <div class="docs-example docs-search-item" data-search="javascript drawer modal escape key">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Escape key close pattern</div>
+              <button class="docs-copy" data-copy-target="code-js-escape">Copy</button>
+            </div>
+            <pre id="code-js-escape" class="lume-pre docs-code">document.addEventListener('keydown', (event) =&gt; {
+  if (event.key !== 'Escape') return;
+
+  document.querySelectorAll('.lume-modal-overlay.is-open')
+    .forEach((modal) =&gt; modal.classList.remove('is-open'));
+
+  document.querySelectorAll('.lume-drawer.is-open')
+    .forEach((drawer) =&gt; drawer.classList.remove('is-open'));
+});</pre>
+          </div>
+        </section>
+
+        <section id="accessibility" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Accessibility</h2>
+          </div>
+          <p>Lume includes visible focus styles and reduced motion support. Use this checklist during implementation.</p>
+
+          <table class="docs-table docs-search-item" data-search="accessibility wcag keyboard focus modal aria reduced motion">
+            <thead>
+              <tr>
+                <th>Area</th>
+                <th>What to implement</th>
+                <th>Lume support</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Keyboard navigation</td>
+                <td>All interactive controls reachable with Tab</td>
+                <td><code>:focus-visible</code> styles included</td>
+              </tr>
+              <tr>
+                <td>Modal semantics</td>
+                <td><code>role="dialog"</code>, <code>aria-modal="true"</code>, focus trap</td>
+                <td>Structure + styles provided</td>
+              </tr>
+              <tr>
+                <td>Alerts</td>
+                <td>Use <code>role="alert"</code> for critical live updates</td>
+                <td>Alert variants available</td>
+              </tr>
+              <tr>
+                <td>Motion</td>
+                <td>Respect reduced motion preference</td>
+                <td><code>@media (prefers-reduced-motion: reduce)</code> support included</td>
+              </tr>
+              <tr>
+                <td>Contrast</td>
+                <td>Verify custom theme contrast at WCAG AA</td>
+                <td>Default palette is tuned for readability</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="docs-note">
+            Recommended QA: navigate docs with keyboard only, run Lighthouse accessibility audit, and test with reduced
+            motion enabled at the OS level.
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function escapeHtml(value) {
+      return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function highlightHtmlSnippet(source) {
+      let escaped = escapeHtml(source);
+
+      escaped = escaped.replace(/&lt;!--[\s\S]*?--&gt;/g, (match) => {
+        return `<span class="tok-comment">${match}</span>`;
+      });
+
+      escaped = escaped.replace(/&lt;!DOCTYPE\s+html&gt;/gi, (match) => {
+        return `<span class="tok-doctype">${match}</span>`;
+      });
+
+      escaped = escaped.replace(/(&lt;\/?)([a-zA-Z][\w:-]*)([\s\S]*?)(\/?&gt;)/g, (_match, open, tagName, attrs, close) => {
+        const highlightedAttrs = attrs.replace(/([\w:@-]+)(=)(&quot;[\s\S]*?&quot;|&#39;[\s\S]*?&#39;)/g,
+          '<span class="tok-attr">$1</span><span class="tok-punc">$2</span><span class="tok-string">$3</span>');
+
+        return `<span class="tok-bracket">${open}</span><span class="tok-tag">${tagName}</span>${highlightedAttrs}<span class="tok-bracket">${close}</span>`;
+      });
+
+      return escaped;
+    }
+
+    function applyCodeHighlighting() {
+      document.querySelectorAll('.docs-code').forEach((codeBlock) => {
+        const raw = codeBlock.textContent || '';
+        if (!/^\s*</.test(raw)) return;
+        codeBlock.innerHTML = highlightHtmlSnippet(raw);
+      });
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const button = document.getElementById('theme-toggle');
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      button.textContent = next === 'dark' ? '☀ Light' : '☾ Dark';
+      try { localStorage.setItem('lume-theme', next); } catch (error) {}
+    }
+
+    function docsSwitchTab(tab, panelId) {
+      const tabBar = tab.parentElement;
+      const panels = tabBar.nextElementSibling;
+      tabBar.querySelectorAll('.lume-tab').forEach((item) => item.classList.remove('is-active'));
+      panels.querySelectorAll('.lume-tab-panel').forEach((item) => item.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      const target = document.getElementById(panelId);
+      if (target) target.classList.add('is-active');
+    }
+
+    function openDocsModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('is-open');
+    }
+
+    function closeDocsModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('is-open');
+    }
+
+    function toggleDocsDropdown(id) {
+      const dropdown = document.getElementById(id);
+      if (!dropdown) return;
+      dropdown.classList.toggle('is-open');
+    }
+
+    function openDocsDrawer(id) {
+      const drawer = document.getElementById(id);
+      const overlay = document.getElementById('docs-drawer-overlay');
+      if (drawer) drawer.classList.add('is-open');
+      if (overlay) overlay.classList.add('is-open');
+    }
+
+    function closeDocsDrawers() {
+      document.querySelectorAll('.lume-drawer.is-open').forEach((drawer) => drawer.classList.remove('is-open'));
+      const overlay = document.getElementById('docs-drawer-overlay');
+      if (overlay) overlay.classList.remove('is-open');
+    }
+
+    try {
+      const savedTheme = localStorage.getItem('lume-theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const button = document.getElementById('theme-toggle');
+        if (button) button.textContent = savedTheme === 'dark' ? '☀ Light' : '☾ Dark';
+      }
+    } catch (error) {}
+
+    document.querySelectorAll('.docs-copy').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const targetId = button.getAttribute('data-copy-target');
+        const codeEl = document.getElementById(targetId);
+        if (!codeEl) return;
+
+        try {
+          await navigator.clipboard.writeText(codeEl.textContent || '');
+          button.classList.add('is-copied');
+          button.textContent = 'Copied';
+          setTimeout(() => {
+            button.classList.remove('is-copied');
+            button.textContent = 'Copy';
+          }, 1400);
+        } catch (error) {
+          button.textContent = 'Failed';
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 1200);
+        }
+      });
+    });
+
+    applyCodeHighlighting();
+
+    const navLinks = Array.from(document.querySelectorAll('.docs-nav a'));
+    const sectionMap = navLinks
+      .map((link) => {
+        const id = link.getAttribute('href')?.replace('#', '') || '';
+        return { link, section: document.getElementById(id) };
+      })
+      .filter((entry) => entry.section);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach((link) => link.classList.remove('is-active'));
+          const match = sectionMap.find((item) => item.section === entry.target);
+          if (match) match.link.classList.add('is-active');
+        });
+      },
+      { rootMargin: '-20% 0px -70% 0px', threshold: [0, 1] }
+    );
+
+    sectionMap.forEach((entry) => observer.observe(entry.section));
+
+    const searchInput = document.getElementById('docs-search');
+    const searchableItems = Array.from(document.querySelectorAll('.docs-search-item'));
+
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim().toLowerCase();
+        searchableItems.forEach((item) => {
+          const haystack = [item.textContent, item.getAttribute('data-search')].join(' ').toLowerCase();
+          item.style.display = !query || haystack.includes(query) ? '' : 'none';
+        });
+      });
+    }
+
+    document.addEventListener('click', (event) => {
+      document.querySelectorAll('.lume-dropdown.is-open').forEach((dropdown) => {
+        if (!dropdown.contains(event.target)) dropdown.classList.remove('is-open');
+      });
+
+      const target = event.target;
+      if (target instanceof HTMLElement && target.classList.contains('lume-toast-close')) {
+        const toast = target.closest('.lume-toast');
+        if (toast) toast.remove();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      document.querySelectorAll('.lume-modal-overlay.is-open').forEach((modal) => modal.classList.remove('is-open'));
+      closeDocsDrawers();
+      document.querySelectorAll('.lume-dropdown.is-open').forEach((dropdown) => dropdown.classList.remove('is-open'));
+    });
+
+    function revealUiWhenReady() {
+      const removePending = () => document.documentElement.removeAttribute('data-ui-init');
+
+      const iconInit = () => {
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          window.lucide.createIcons();
+        }
+      };
+
+      const fontReady = (document.fonts && document.fonts.ready)
+        ? Promise.race([
+            document.fonts.ready,
+            new Promise((resolve) => setTimeout(resolve, 900))
+          ])
+        : Promise.resolve();
+
+      fontReady.finally(() => {
+        iconInit();
+        removePending();
+      });
+    }
+
+    if (document.readyState === 'complete') {
+      revealUiWhenReady();
+    } else {
+      window.addEventListener('load', revealUiWhenReady, { once: true });
+    }
+  </script>
+</body>
+
+</html>

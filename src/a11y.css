@@ -1,0 +1,45 @@
+/* ============================================
+   REDUCED MOTION
+   Disable / simplify all animations for users
+   who prefer reduced motion.
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   FOCUS-VISIBLE STYLES
+   Applies only on keyboard navigation, not mouse clicks.
+   ============================================ */
+
+.lume-tab:focus-visible,
+.lume-page-item:focus-visible,
+.lume-dropdown-item:focus-visible,
+.lume-accordion-trigger:focus-visible,
+.lume-navbar-nav a:focus-visible,
+.lume-btn:focus-visible {
+  outline: 2px solid var(--lume-accent);
+  outline-offset: 2px;
+}
+
+.lume-input:focus-visible,
+.lume-select:focus-visible,
+.lume-textarea:focus-visible {
+  outline: none; /* border + box-shadow already handled on :focus */
+}
+
+.lume-modal-close:focus-visible,
+.lume-alert-close:focus-visible,
+.lume-toast-close:focus-visible {
+  outline: 2px solid var(--lume-accent);
+  outline-offset: 2px;
+  border-radius: var(--lume-radius);
+}
