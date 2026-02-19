@@ -21,7 +21,7 @@ Lume ships a polished component set, design-token-based theming, dark mode, util
 ### Option 1: CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lume-css/dist/lume.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iamtherealtim/lume-css/dist/lume.min.css" />
 ```
 
 ### Option 2: Local file
@@ -35,14 +35,14 @@ Lume ships a polished component set, design-token-based theming, dark mode, util
 Use one CSS bundle (and optional JS helper) for fastest setup:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lume-css/dist/lume.min.css" />
-<script defer src="https://cdn.jsdelivr.net/npm/lume-css/dist/lume.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@iamtherealtim/lume-css/dist/lume.min.css" />
+<script defer src="https://cdn.jsdelivr.net/npm/@iamtherealtim/lume-css/dist/lume.js"></script>
 ```
 
 Or in npm-based projects:
 
 ```css
-@import "lume-css/lume.css";
+@import "@iamtherealtim/lume-css/lume.css";
 ```
 
 ## Use Only Parts Of The Library
@@ -50,9 +50,9 @@ Or in npm-based projects:
 Import only the modules your product needs:
 
 ```css
-@import "lume-css/core.css";
-@import "lume-css/components.css";
-@import "lume-css/utilities.css";
+@import "@iamtherealtim/lume-css/core.css";
+@import "@iamtherealtim/lume-css/components.css";
+@import "@iamtherealtim/lume-css/utilities.css";
 ```
 
 You can also include `a11y.css` and `responsive.css` explicitly when you want those layers separately.
@@ -62,7 +62,7 @@ You can also include `a11y.css` and `responsive.css` explicitly when you want th
 Lume ships an optional runtime helper at `dist/lume.js` for interactive patterns.
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/lume-css/dist/lume.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@iamtherealtim/lume-css/dist/lume.js"></script>
 ```
 
 Supported helpers:
