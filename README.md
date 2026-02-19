@@ -4,6 +4,11 @@ A minimal, open-source CSS library for thoughtful interfaces.
 
 Lume ships a polished component set, design-token-based theming, dark mode, utility helpers, and practical docs/demo apps you can use as implementation references.
 
+## Live Links
+
+- Docs: https://iamtherealtim.github.io/lume-css/lume-docs.html
+- Admin demo: https://iamtherealtim.github.io/lume-css/admin-demo/dashboard.html
+
 ## What’s Included
 
 - `dist/lume.css` + `dist/lume.min.css` — distributable CSS artifacts
