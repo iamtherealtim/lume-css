@@ -510,9 +510,9 @@
   <header class="docs-header">
     <a class="docs-brand" href="#overview"><img class="docs-brand-logo" src="lume-logo.png" alt="Lume logo" /></a>
 
-    <div class="docs-search">
-      <i data-lucide="search"></i>
-      <input id="docs-search" class="lume-input lume-input-sm" type="search" placeholder="Search components, classes, utilities..." />
+    <div class="docs-search lume-input-search-wrap">
+      <i data-lucide="search" class="lume-input-search-icon"></i>
+      <input id="docs-search" class="lume-input lume-input-sm lume-input-search" type="search" placeholder="Search components, classes, utilities..." />
     </div>
 
     <button class="lume-btn lume-btn-outline lume-btn-sm" id="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☾ Dark</button>
@@ -616,7 +616,11 @@
                 <div class="docs-example-title">CDN</div>
                 <button class="docs-copy" data-copy-target="code-install-cdn">Copy</button>
               </div>
-              <pre id="code-install-cdn" class="lume-pre docs-code">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@iamtherealtim/lume-css/dist/lume.min.css&quot; /&gt;</pre>
+              <pre id="code-install-cdn" class="lume-pre docs-code">&lt;!-- latest (fastest updates) --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@iamtherealtim/lume-css/dist/lume.min.css&quot; /&gt;
+
+&lt;!-- pinned (recommended for production stability) --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@iamtherealtim/lume-css@1.0.0/dist/lume.min.css&quot; /&gt;</pre>
             </article>
             <article class="docs-example docs-search-item" data-search="installation npm import">
               <div class="docs-example-head">
@@ -629,6 +633,7 @@
 @import &quot;@iamtherealtim/lume-css/dist/lume.css&quot;;</pre>
             </article>
           </div>
+          <div class="docs-note">For production, prefer pinned CDN versions and review <a href="../CHANGELOG.md" target="_blank" rel="noopener noreferrer">CHANGELOG</a> before upgrading.</div>
         </section>
 
         <section id="starter-templates" class="docs-section">
@@ -720,6 +725,34 @@
           <div class="docs-note">Utilities are namespaced as <code>lume-*</code> to avoid collisions with existing app styles.</div>
         </section>
 
+        <section id="migration" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Migration & Integration</h2>
+          </div>
+          <p>Adding Lume to an existing app usually takes three safe steps: import once, scope updates gradually, and swap custom utilities incrementally.</p>
+          <div class="docs-grid cols-2">
+            <article class="docs-example docs-search-item" data-search="migration existing css incremental rollout">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Incremental rollout checklist</div>
+              </div>
+              <ul class="docs-list">
+                <li>Start with one route or feature area.</li>
+                <li>Use existing classes + add <code>lume-*</code> utilities gradually.</li>
+                <li>Adopt token overrides in app-level <code>:root</code> once layout is stable.</li>
+              </ul>
+            </article>
+            <article class="docs-example docs-search-item" data-search="migration stylesheet order">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Stylesheet order</div>
+                <button class="docs-copy" data-copy-target="code-migration-order">Copy</button>
+              </div>
+              <pre id="code-migration-order" class="lume-pre docs-code">&lt;link rel=&quot;stylesheet&quot; href=&quot;/legacy.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/lume.css&quot; /&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/app-overrides.css&quot; /&gt;</pre>
+            </article>
+          </div>
+        </section>
+
         <section id="no-flicker" class="docs-section">
           <div class="docs-section-head">
             <h2>No Flicker Setup</h2>
@@ -806,6 +839,44 @@ html[data-theme="dark"] {
 }</pre>
           </div>
           <div class="docs-note">Tip: persist user theme preference with <code>localStorage</code> and apply it before CSS loads. See <a href="#no-flicker">No Flicker Setup</a> for the full startup pattern.</div>
+        </section>
+
+        <section id="browser-support" class="docs-section">
+          <div class="docs-section-head">
+            <h2>Browser Support</h2>
+          </div>
+          <p>Lume targets modern evergreen browsers. Some visual enhancements (for example <code>color-mix()</code>) may gracefully degrade in older environments.</p>
+          <table class="docs-table docs-search-item" data-search="browser support compatibility">
+            <thead>
+              <tr>
+                <th>Browser</th>
+                <th>Supported</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Chrome / Edge (current)</td>
+                <td>Yes</td>
+                <td>Full feature set</td>
+              </tr>
+              <tr>
+                <td>Firefox (current)</td>
+                <td>Yes</td>
+                <td>Full feature set</td>
+              </tr>
+              <tr>
+                <td>Safari 16.4+</td>
+                <td>Yes</td>
+                <td>Recommended baseline for modern CSS parity</td>
+              </tr>
+              <tr>
+                <td>Legacy browsers</td>
+                <td>Partial</td>
+                <td>Core layout works; modern visual effects may degrade</td>
+              </tr>
+            </tbody>
+          </table>
         </section>
 
         <section id="tokens" class="docs-section">
@@ -1089,6 +1160,26 @@ html[data-theme="dark"] {
                 <td>Collapse at small breakpoints</td>
               </tr>
               <tr>
+                <td><code>.lume-grid-5/6</code></td>
+                <td>Extended fixed equal grid columns</td>
+                <td>Useful for denser dashboards and data tiles</td>
+              </tr>
+              <tr>
+                <td><code>.lume-grid-auto-fill/auto-fit</code></td>
+                <td>Auto-responsive grid tracks</td>
+                <td>Adapts column count based on available width</td>
+              </tr>
+              <tr>
+                <td><code>.lume-grid-gap-1..8</code></td>
+                <td>Grid-specific gap spacing scale</td>
+                <td>Use when you want gap control independent of flex gaps</td>
+              </tr>
+              <tr>
+                <td><code>.lume-grid-collapse-sm/md/lg</code></td>
+                <td>Explicit breakpoint collapse modifiers</td>
+                <td>Force single-column stack at selected breakpoints</td>
+              </tr>
+              <tr>
                 <td><code>.lume-flex</code> + helpers</td>
                 <td>Flex row/column alignment</td>
                 <td>Pair with <code>.lume-gap-*</code></td>
@@ -1229,13 +1320,33 @@ html[data-theme="dark"] {
 &lt;button class=&quot;lume-btn lume-btn-gradient-aurora lume-btn-no-shift&quot;&gt;No Shift&lt;/button&gt;
 &lt;button class=&quot;lume-btn lume-btn-gradient-violet lume-btn-fx-off&quot;&gt;FX Off&lt;/button&gt;</pre>
           </div>
+
+          <div class="docs-example docs-search-item" data-search="buttons loading state lume-btn-loading aria-busy">
+            <div class="docs-example-head">
+              <div class="docs-example-title">Loading button pattern</div>
+              <button class="docs-copy" data-copy-target="code-buttons-loading">Copy</button>
+            </div>
+            <div class="docs-preview">
+              <div class="demo-row">
+                <button class="lume-btn lume-btn-primary lume-btn-loading" aria-busy="true">Saving changes</button>
+                <button class="lume-btn lume-btn-outline lume-btn-loading" disabled>Processing</button>
+              </div>
+            </div>
+            <pre id="code-buttons-loading" class="lume-pre docs-code">&lt;button class=&quot;lume-btn lume-btn-primary lume-btn-loading&quot; aria-busy=&quot;true&quot;&gt;
+  Saving changes
+&lt;/button&gt;
+
+&lt;button class=&quot;lume-btn lume-btn-outline lume-btn-loading&quot; disabled&gt;
+  Processing
+&lt;/button&gt;</pre>
+          </div>
         </section>
 
         <section id="forms" class="docs-section">
           <div class="docs-section-head">
             <h2>Forms</h2>
           </div>
-          <p>Form controls include labeled inputs, selects, textarea, check/radio groups, errors, and input groups.</p>
+          <p>Form controls include labeled inputs, selects, textarea, search fields, check/radio groups, errors, and input groups.</p>
 
           <div class="docs-example docs-search-item" data-search="forms input select textarea checkbox radio input-group error">
             <div class="docs-example-head">
@@ -1249,6 +1360,13 @@ html[data-theme="dark"] {
                     <label class="lume-label lume-label-required">Full name</label>
                     <input class="lume-input" type="text" placeholder="Jane Smith" />
                     <span class="lume-hint">As it appears on legal documents.</span>
+                  </div>
+                  <div class="lume-form-group">
+                    <label class="lume-label">Search users</label>
+                    <div class="lume-input-search-wrap">
+                      <i data-lucide="search" class="lume-input-search-icon"></i>
+                      <input class="lume-input lume-input-search" type="search" placeholder="Search by name, email, or ID" />
+                    </div>
                   </div>
                   <div class="lume-form-group">
                     <label class="lume-label">Country</label>
@@ -1282,6 +1400,27 @@ html[data-theme="dark"] {
                     <label class="lume-check-group"><input type="checkbox" checked /> <span class="lume-check-label">Enable notifications</span></label>
                     <label class="lume-check-group"><input type="radio" name="docs-plan" checked /> <span class="lume-check-label">Starter plan</span></label>
                     <label class="lume-check-group"><input type="radio" name="docs-plan" /> <span class="lume-check-label">Pro plan</span></label>
+                  </div>
+                  <div class="lume-form-group">
+                    <label class="lume-label">Storage quota</label>
+                    <input class="lume-range" type="range" min="0" max="100" value="60" />
+                  </div>
+                  <div class="lume-form-group">
+                    <label class="lume-switch">
+                      <input type="checkbox" checked />
+                      <span class="lume-switch-track" aria-hidden="true"></span>
+                      <span class="lume-switch-label">Enable two-factor authentication</span>
+                    </label>
+                  </div>
+                  <div class="lume-form-group" style="margin-bottom:0;">
+                    <label class="lume-label">Upload assets</label>
+                    <div class="lume-file">
+                      <input class="lume-file-input" type="file" />
+                      <div class="lume-file-dropzone">
+                        <div class="lume-file-title">Drop files here or click to browse</div>
+                        <div class="lume-file-meta">PNG, JPG, PDF up to 10MB</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1320,6 +1459,21 @@ html[data-theme="dark"] {
   &lt;span class=&quot;lume-check-label&quot;&gt;Pro plan&lt;/span&gt;
 &lt;/label&gt;
 &lt;textarea class=&quot;lume-textarea&quot; rows=&quot;3&quot; placeholder=&quot;Tell us about yourself...&quot;&gt;&lt;/textarea&gt;
+&lt;input class=&quot;lume-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;60&quot; /&gt;
+
+&lt;label class=&quot;lume-switch&quot;&gt;
+  &lt;input type=&quot;checkbox&quot; checked /&gt;
+  &lt;span class=&quot;lume-switch-track&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;lume-switch-label&quot;&gt;Enable two-factor authentication&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;div class=&quot;lume-file&quot;&gt;
+  &lt;input class=&quot;lume-file-input&quot; type=&quot;file&quot; /&gt;
+  &lt;div class=&quot;lume-file-dropzone&quot;&gt;
+    &lt;div class=&quot;lume-file-title&quot;&gt;Drop files here or click to browse&lt;/div&gt;
+    &lt;div class=&quot;lume-file-meta&quot;&gt;PNG, JPG, PDF up to 10MB&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;</pre>
           </div>
         </section>
@@ -1397,6 +1551,27 @@ html[data-theme="dark"] {
     &lt;button class=&quot;lume-btn lume-btn-primary lume-btn-sm&quot;&gt;Open dashboard&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;</pre>
+            </article>
+
+            <article class="docs-example docs-search-item" data-search="cards interactive clickable card link lume-card-interactive lume-card-link">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Interactive card links</div>
+                <button class="docs-copy" data-copy-target="code-cards-interactive">Copy</button>
+              </div>
+              <div class="docs-preview lume-stack-3">
+                <a class="lume-card lume-card-link lume-card-interactive" href="#" onclick="event.preventDefault()">
+                  <div class="lume-card-body">
+                    <h3 class="lume-card-title">Revenue report</h3>
+                    <p class="lume-card-text">Open the weekly performance summary.</p>
+                  </div>
+                </a>
+              </div>
+              <pre id="code-cards-interactive" class="lume-pre docs-code">&lt;a class=&quot;lume-card lume-card-link lume-card-interactive&quot; href=&quot;/reports/revenue&quot;&gt;
+  &lt;div class=&quot;lume-card-body&quot;&gt;
+    &lt;h3 class=&quot;lume-card-title&quot;&gt;Revenue report&lt;/h3&gt;
+    &lt;p class=&quot;lume-card-text&quot;&gt;Open the weekly performance summary.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/a&gt;</pre>
             </article>
           </div>
         </section>
@@ -1602,6 +1777,7 @@ html[data-theme="dark"] {
             <h2>Tooltip</h2>
           </div>
           <p>Tooltips are attribute-driven and work on any inline or block element.</p>
+          <p class="docs-note">Note: CSS-only tooltips may clip inside <code>overflow: hidden</code> parents and complex scroll containers. For advanced positioning, use a JS-positioned popover/tooltip layer.</p>
           <div class="docs-example docs-search-item" data-search="tooltip data-tooltip positions top bottom left right">
             <div class="docs-example-head">
               <div class="docs-example-title">Directional tooltips</div>
@@ -1664,6 +1840,7 @@ html[data-theme="dark"] {
             <h2>Accordion</h2>
           </div>
           <p>Accordions use native <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code>, so they work without JavaScript and are accessible by default.</p>
+          <p class="docs-note">Because it uses native <code>&lt;details&gt;</code>, open/close height animation is intentionally minimal. Use an enhanced JS variant if you need animated panels.</p>
           <div class="docs-example docs-search-item" data-search="accordion details summary">
             <div class="docs-example-head">
               <div class="docs-example-title">Details accordion</div>
@@ -1733,10 +1910,10 @@ html[data-theme="dark"] {
             </div>
             <div class="docs-preview lume-stack-4" style="max-width: 560px;">
               <div>
-                <div class="lume-progress"><div class="lume-progress-bar" style="width: 72%;"></div></div>
+                <div class="lume-progress"><div class="lume-progress-bar" role="progressbar" aria-label="Upload progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72" style="width: 72%;"></div></div>
               </div>
               <div>
-                <div class="lume-progress"><div class="lume-progress-bar lume-progress-bar-striped" style="width: 45%;"></div></div>
+                <div class="lume-progress"><div class="lume-progress-bar lume-progress-bar-striped" role="progressbar" aria-label="Background sync" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45" style="width: 45%;"></div></div>
               </div>
               <div class="demo-row" style="align-items:center; gap:1rem;">
                 <div class="lume-spinner lume-spinner-sm"></div>
@@ -1749,7 +1926,15 @@ html[data-theme="dark"] {
               </div>
             </div>
             <pre id="code-progress" class="lume-pre docs-code">&lt;div class=&quot;lume-progress&quot;&gt;
-  &lt;div class=&quot;lume-progress-bar&quot; style=&quot;width: 72%;&quot;&gt;&lt;/div&gt;
+  &lt;div
+    class=&quot;lume-progress-bar&quot;
+    role=&quot;progressbar&quot;
+    aria-label=&quot;Upload progress&quot;
+    aria-valuemin=&quot;0&quot;
+    aria-valuemax=&quot;100&quot;
+    aria-valuenow=&quot;72&quot;
+    style=&quot;width: 72%;&quot;&gt;
+  &lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;lume-progress&quot;&gt;
@@ -1890,8 +2075,8 @@ html[data-theme="dark"] {
             </div>
             <div class="docs-preview">
               <nav class="lume-pagination" aria-label="Pagination">
-                <a class="lume-page-item is-disabled" href="#">← Prev</a>
-                <a class="lume-page-item is-active" href="#">1</a>
+                <a class="lume-page-item is-disabled" aria-disabled="true" tabindex="-1" href="#">← Prev</a>
+                <a class="lume-page-item is-active" aria-current="page" href="#">1</a>
                 <a class="lume-page-item" href="#">2</a>
                 <a class="lume-page-item" href="#">3</a>
                 <span class="lume-page-ellipsis">…</span>
@@ -1899,9 +2084,9 @@ html[data-theme="dark"] {
                 <a class="lume-page-item" href="#">Next →</a>
               </nav>
             </div>
-            <pre id="code-pagination" class="lume-pre docs-code">&lt;nav class=&quot;lume-pagination&quot;&gt;
-  &lt;a class=&quot;lume-page-item is-disabled&quot;&gt;← Prev&lt;/a&gt;
-  &lt;a class=&quot;lume-page-item is-active&quot;&gt;1&lt;/a&gt;
+            <pre id="code-pagination" class="lume-pre docs-code">&lt;nav class=&quot;lume-pagination&quot; aria-label=&quot;Pagination&quot;&gt;
+  &lt;a class=&quot;lume-page-item is-disabled&quot; aria-disabled=&quot;true&quot; tabindex=&quot;-1&quot;&gt;← Prev&lt;/a&gt;
+  &lt;a class=&quot;lume-page-item is-active&quot; aria-current=&quot;page&quot;&gt;1&lt;/a&gt;
   &lt;a class=&quot;lume-page-item&quot;&gt;2&lt;/a&gt;
 &lt;/nav&gt;</pre>
           </div>
@@ -1918,7 +2103,7 @@ html[data-theme="dark"] {
               <button class="docs-copy" data-copy-target="code-skeleton">Copy</button>
             </div>
             <div class="docs-preview" style="max-width: 340px;">
-              <div class="lume-skeleton-card">
+              <div class="lume-skeleton-card" role="status" aria-label="Loading content">
                 <div class="lume-skeleton lume-skeleton-card-img"></div>
                 <div class="lume-skeleton-card-body">
                   <div class="lume-skeleton lume-skeleton-heading"></div>
@@ -1928,7 +2113,7 @@ html[data-theme="dark"] {
                 </div>
               </div>
             </div>
-            <pre id="code-skeleton" class="lume-pre docs-code">&lt;div class=&quot;lume-skeleton-card&quot;&gt;
+            <pre id="code-skeleton" class="lume-pre docs-code">&lt;div class=&quot;lume-skeleton-card&quot; role=&quot;status&quot; aria-label=&quot;Loading content&quot;&gt;
   &lt;div class=&quot;lume-skeleton lume-skeleton-card-img&quot;&gt;&lt;/div&gt;
   &lt;div class=&quot;lume-skeleton-card-body&quot;&gt;
     &lt;div class=&quot;lume-skeleton lume-skeleton-heading&quot;&gt;&lt;/div&gt;
@@ -2100,19 +2285,19 @@ html[data-theme="dark"] {
               <div class="lume-steps lume-steps-vertical" style="max-width: 320px;">
                 <div class="lume-step lume-step-completed"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Order placed</div></div></div>
                 <div class="lume-step lume-step-active"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Shipped</div></div></div>
-                <div class="lume-step"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Delivered</div></div></div>
+                <div class="lume-step lume-step-error"><div class="lume-step-indicator"></div><div class="lume-step-content"><div class="lume-step-title">Delivery failed</div></div></div>
               </div>
             </div>
             <pre id="code-stepper" class="lume-pre docs-code">&lt;div class=&quot;lume-steps&quot;&gt;
   &lt;div class=&quot;lume-step lume-step-completed&quot;&gt;...&lt;/div&gt;
   &lt;div class=&quot;lume-step lume-step-active&quot;&gt;...&lt;/div&gt;
-  &lt;div class=&quot;lume-step&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;lume-step lume-step-error&quot;&gt;...&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;lume-steps lume-steps-vertical&quot;&gt;
   &lt;div class=&quot;lume-step lume-step-completed&quot;&gt;...&lt;/div&gt;
   &lt;div class=&quot;lume-step lume-step-active&quot;&gt;...&lt;/div&gt;
-  &lt;div class=&quot;lume-step&quot;&gt;...&lt;/div&gt;
+  &lt;div class=&quot;lume-step lume-step-error&quot;&gt;...&lt;/div&gt;
 &lt;/div&gt;</pre>
           </div>
         </section>
@@ -2200,6 +2385,21 @@ html[data-theme="dark"] {
                 <td>Display / Flex</td>
                 <td><code>lume-d-flex</code>, <code>lume-d-grid</code>, <code>lume-flex-1</code>, <code>lume-gap-*</code></td>
                 <td><code>class="lume-d-flex lume-gap-4"</code></td>
+              </tr>
+              <tr>
+                <td>Responsive visibility</td>
+                <td><code>lume-sm-hidden</code>, <code>lume-sm-block</code>, <code>lume-md-hidden</code>, <code>lume-lg-hidden</code></td>
+                <td><code>class="lume-sm-hidden lume-md-block"</code></td>
+              </tr>
+              <tr>
+                <td>Text behavior</td>
+                <td><code>lume-text-truncate</code>, <code>lume-text-wrap</code>, <code>lume-text-nowrap</code>, <code>lume-uppercase</code>, <code>lume-tracking-wide</code></td>
+                <td><code>class="lume-text-truncate lume-uppercase"</code></td>
+              </tr>
+              <tr>
+                <td>Grid layout helpers</td>
+                <td><code>lume-grid-gap-*</code>, <code>lume-grid-collapse-sm/md/lg</code></td>
+                <td><code>class="lume-grid lume-grid-4 lume-grid-gap-6 lume-grid-collapse-md"</code></td>
               </tr>
               <tr>
                 <td>Overflow / Position</td>
@@ -2413,6 +2613,25 @@ html[data-theme="dark"] {
     }
   });
 });</pre>
+            </article>
+
+            <article class="docs-example docs-search-item" data-search="javascript toast autodismiss data-lume-autodismiss data-lume-remove removable chips">
+              <div class="docs-example-head">
+                <div class="docs-example-title">Data-attribute behaviors</div>
+                <button class="docs-copy" data-copy-target="code-js-data-behaviors">Copy</button>
+              </div>
+              <pre id="code-js-data-behaviors" class="lume-pre docs-code">&lt;!-- Auto-dismiss after 5s (default) --&gt;
+&lt;div class=&quot;lume-toast&quot; data-lume-autodismiss=&quot;5000&quot;&gt;
+  Saved successfully
+&lt;/div&gt;
+
+&lt;!-- Opt out from auto-dismiss --&gt;
+&lt;div class=&quot;lume-toast&quot; data-lume-autodismiss=&quot;false&quot;&gt;
+  Persistent message
+&lt;/div&gt;
+
+&lt;!-- Remove parent row/chip/card from a button --&gt;
+&lt;button data-lume-remove=&quot;.lume-tag&quot;&gt;Remove&lt;/button&gt;</pre>
             </article>
           </div>
 

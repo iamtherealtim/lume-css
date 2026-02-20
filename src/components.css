@@ -107,6 +107,24 @@
   pointer-events: none;
 }
 
+.lume-btn-loading,
+.lume-btn[aria-busy="true"] {
+  position: relative;
+  pointer-events: none;
+}
+
+.lume-btn-loading::after,
+.lume-btn[aria-busy="true"]::after {
+  content: '';
+  width: 0.95em;
+  height: 0.95em;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: lume-spin 0.6s linear infinite;
+  opacity: 0.9;
+}
+
 /* Solid (default) */
 .lume-btn-primary {
   background: var(--lume-accent);
@@ -471,6 +489,30 @@
   border-color: transparent;
 }
 
+.lume-card-interactive,
+.lume-card-link {
+  cursor: pointer;
+}
+
+a.lume-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.lume-card-interactive:hover,
+.lume-card-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--lume-shadow-md);
+  border-color: color-mix(in srgb, var(--lume-accent) 22%, var(--lume-border));
+}
+
+.lume-card-interactive:focus-visible,
+.lume-card-link:focus-visible {
+  outline: 2px solid var(--lume-accent);
+  outline-offset: 2px;
+}
+
 /* Horizontal card */
 .lume-card-horizontal {
   display: flex;
@@ -602,6 +644,25 @@
   font-size: var(--lume-text-base);
 }
 
+.lume-input-search-wrap {
+  position: relative;
+}
+
+.lume-input-search {
+  padding-left: 2.25rem;
+}
+
+.lume-input-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  color: var(--lume-text-subtle);
+  pointer-events: none;
+}
+
 /* Input group (with prefix/suffix) */
 .lume-input-group {
   display: flex;
@@ -695,6 +756,117 @@
 
 .lume-range::-webkit-slider-thumb:hover {
   transform: scale(1.2);
+}
+
+/* Switch / Toggle */
+.lume-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lume-space-3);
+  cursor: pointer;
+}
+
+.lume-switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.lume-switch-track {
+  position: relative;
+  width: 42px;
+  height: 24px;
+  border-radius: var(--lume-radius-full);
+  background: var(--lume-border-dark);
+  transition: background var(--lume-transition);
+  flex-shrink: 0;
+}
+
+.lume-switch-track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--lume-white);
+  box-shadow: var(--lume-shadow-xs);
+  transition: transform var(--lume-transition);
+}
+
+.lume-switch input:checked + .lume-switch-track {
+  background: var(--lume-accent);
+}
+
+.lume-switch input:checked + .lume-switch-track::after {
+  transform: translateX(18px);
+}
+
+.lume-switch input:focus-visible + .lume-switch-track {
+  box-shadow: 0 0 0 3px rgba(91, 91, 214, 0.2);
+}
+
+.lume-switch input:disabled + .lume-switch-track {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.lume-switch-label {
+  font-size: var(--lume-text-sm);
+  color: var(--lume-text);
+}
+
+/* File input / drop zone */
+.lume-file {
+  position: relative;
+}
+
+.lume-file-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.lume-file-dropzone {
+  border: 1px dashed var(--lume-border-dark);
+  border-radius: var(--lume-radius-md);
+  background: var(--lume-surface);
+  padding: var(--lume-space-5);
+  text-align: center;
+  color: var(--lume-text-muted);
+  transition: border-color var(--lume-transition), background var(--lume-transition), box-shadow var(--lume-transition);
+}
+
+.lume-file-dropzone:hover {
+  border-color: var(--lume-accent);
+  background: color-mix(in srgb, var(--lume-accent-light) 45%, var(--lume-surface));
+}
+
+.lume-file-input:focus-visible + .lume-file-dropzone {
+  border-color: var(--lume-accent);
+  box-shadow: 0 0 0 3px rgba(91, 91, 214, 0.18);
+}
+
+.lume-file-title {
+  font-size: var(--lume-text-sm);
+  font-weight: 600;
+  color: var(--lume-text);
+  margin-bottom: var(--lume-space-2);
+}
+
+.lume-file-meta {
+  font-size: var(--lume-text-xs);
+  color: var(--lume-text-subtle);
 }
 
 /* ============================================

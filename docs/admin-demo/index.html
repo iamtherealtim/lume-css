@@ -1,12 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0; url=dashboard.html" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lume Admin Demo</title>
+  <script>document.documentElement.setAttribute('data-ui-init','pending');try{const t=localStorage.getItem('lume-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(_){}</script>
+  <title>Lume Admin — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Lora:wght@600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../lume.css" />
+  <link rel="stylesheet" href="admin-demo.css" />
+  <script defer src="https://unpkg.com/lucide@latest"></script>
+  <script defer src="admin-demo.js"></script>
 </head>
-<body>
-  <p>Redirecting to <a href="dashboard.html">dashboard</a>…</p>
+<body class="admin-auth-body">
+  <main class="admin-auth-layout">
+    <section class="admin-auth-hero">
+      <a class="admin-brand" href="../lume-showcase.html">
+        <img class="admin-brand-logo" src="../lume-logo.png" alt="Lume logo" />
+      </a>
+      <span class="lume-badge lume-badge-primary lume-badge-pill">Admin Demo</span>
+      <h1 class="admin-auth-title">Secure workspace access for your operations team.</h1>
+      <p class="admin-auth-subtitle">Sign in to review analytics, manage users, and monitor platform health in one place.</p>
+
+      <div class="admin-auth-points lume-stack-3">
+        <div class="lume-flex lume-items-center lume-gap-3"><span class="lume-tag">✓</span><span>Role-based access controls for admins and support agents</span></div>
+        <div class="lume-flex lume-items-center lume-gap-3"><span class="lume-tag">✓</span><span>Built-in MFA challenge support and session device trust</span></div>
+        <div class="lume-flex lume-items-center lume-gap-3"><span class="lume-tag">✓</span><span>Audit-ready sign-in events and login anomaly detection</span></div>
+      </div>
+
+      <div class="lume-callout lume-callout-info admin-auth-callout">
+        <div class="lume-callout-title">Demo credentials</div>
+        Use <strong>admin@lume.dev</strong> and <strong>lume1234</strong> to quickly test this flow.
+      </div>
+    </section>
+
+    <section class="admin-auth-panel-wrap">
+      <article class="lume-card admin-auth-panel">
+        <div class="lume-card-body">
+          <div class="lume-flex lume-justify-between lume-items-center lume-mb-4">
+            <div>
+              <h2 class="lume-h4" style="margin-bottom:0.25rem;">Sign in</h2>
+              <p class="lume-small">Use your workspace credentials to continue.</p>
+            </div>
+            <button class="lume-btn lume-btn-outline lume-btn-sm" data-theme-toggle onclick="toggleTheme()">☾ Dark</button>
+          </div>
+
+          <div id="login-feedback" class="lume-callout lume-callout-danger" style="display:none; margin-bottom:1rem;"></div>
+
+          <form id="admin-login-form" class="lume-stack-4" novalidate>
+            <div class="lume-form-group" style="margin-bottom:0;">
+              <label class="lume-label" for="login-email">Work email</label>
+              <input id="login-email" class="lume-input" type="email" placeholder="you@company.com" autocomplete="username" required />
+              <p id="login-email-error" class="lume-caption admin-field-error" hidden>Please enter a valid work email.</p>
+            </div>
+
+            <div class="lume-form-group" style="margin-bottom:0;">
+              <div class="lume-flex lume-justify-between lume-items-center" style="margin-bottom:0.45rem;">
+                <label class="lume-label" for="login-password" style="margin-bottom:0;">Password</label>
+                <a class="lume-small" href="#" onclick="event.preventDefault();showToast('Password reset flow opened', 'info')">Forgot password?</a>
+              </div>
+              <div class="admin-password-wrap">
+                <input id="login-password" class="lume-input" type="password" placeholder="Enter your password" autocomplete="current-password" required />
+                <button id="login-toggle-password" class="lume-btn lume-btn-ghost lume-btn-sm" type="button" aria-label="Show password"><i data-lucide="eye"></i></button>
+              </div>
+              <p id="login-password-error" class="lume-caption admin-field-error" hidden>Password must be at least 8 characters.</p>
+              <p id="login-capslock" class="lume-caption" style="display:none;">Caps Lock is on.</p>
+            </div>
+
+            <div class="lume-form-group" style="margin-bottom:0;">
+              <label class="lume-label" for="login-otp">Verification code <span class="lume-text-muted">(optional)</span></label>
+              <input id="login-otp" class="lume-input" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit code" autocomplete="one-time-code" />
+              <p id="login-otp-error" class="lume-caption admin-field-error" hidden>Code must be 6 digits.</p>
+            </div>
+
+            <div class="lume-flex lume-justify-between lume-items-center lume-gap-3">
+              <label class="lume-check-group"><input id="login-remember" type="checkbox" checked /><span class="lume-check-label">Keep me signed in for 14 days</span></label>
+              <a class="lume-small" href="#" onclick="event.preventDefault();showToast('Device management opened', 'info')">Manage devices</a>
+            </div>
+
+            <button id="login-submit" class="lume-btn lume-btn-primary lume-btn-block lume-with-icon" type="submit"><i data-lucide="log-in"></i><span>Sign in to dashboard</span></button>
+            <button id="login-passkey" class="lume-btn lume-btn-outline lume-btn-block lume-with-icon" type="button"><i data-lucide="fingerprint"></i>Use passkey instead</button>
+
+            <div class="admin-auth-divider"><span>or continue with</span></div>
+
+            <div class="admin-auth-sso">
+              <button class="lume-btn lume-btn-outline lume-btn-block admin-sso-btn" type="button" data-login-provider="google">
+                <svg class="admin-sso-logo" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.2-.9 2.2-1.9 2.9v2.4h3.1c1.8-1.6 2.8-4 2.8-6.9 0-.7-.1-1.5-.2-2.3H12z"/>
+                  <path fill="#34A853" d="M12 22c2.7 0 5-.9 6.7-2.5l-3.1-2.4c-.9.6-2.1 1-3.6 1-2.8 0-5.1-1.9-5.9-4.4H2.9v2.5C4.6 19.6 8 22 12 22z"/>
+                  <path fill="#4A90E2" d="M6.1 13.7c-.2-.6-.3-1.2-.3-1.8s.1-1.2.3-1.8V7.6H2.9C2.3 8.8 2 10.3 2 11.9c0 1.6.3 3.1.9 4.3l3.2-2.5z"/>
+                  <path fill="#FBBC05" d="M12 5.7c1.5 0 2.9.5 3.9 1.5l2.9-2.9C17 2.6 14.7 1.8 12 1.8 8 1.8 4.6 4.1 2.9 7.6l3.2 2.5C6.9 7.6 9.2 5.7 12 5.7z"/>
+                </svg>
+                <span>Google</span>
+              </button>
+              <button class="lume-btn lume-btn-outline lume-btn-block admin-sso-btn" type="button" data-login-provider="github">
+                <svg class="admin-sso-logo" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill="currentColor" d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.6-1.3-1.6-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.2 1.9 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6A4.7 4.7 0 0 1 6.5 8.8c-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11 11 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.6.2 2.8.1 3.1a4.7 4.7 0 0 1 1.2 3.3c0 4.7-2.8 5.7-5.5 6 .4.4.9 1.1.9 2.2v3.2c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/>
+                </svg>
+                <span>GitHub</span>
+              </button>
+              <button class="lume-btn lume-btn-outline lume-btn-block admin-sso-btn" type="button" data-login-provider="microsoft">
+                <svg class="admin-sso-logo" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="2" y="2" width="9" height="9" fill="#F35325"></rect>
+                  <rect x="13" y="2" width="9" height="9" fill="#81BC06"></rect>
+                  <rect x="2" y="13" width="9" height="9" fill="#05A6F0"></rect>
+                  <rect x="13" y="13" width="9" height="9" fill="#FFBA08"></rect>
+                </svg>
+                <span>Microsoft</span>
+              </button>
+              <button class="lume-btn lume-btn-outline lume-btn-block admin-sso-btn" type="button" data-login-provider="saml">
+                <i data-lucide="shield-check"></i>
+                <span>SAML SSO</span>
+              </button>
+            </div>
+          </form>
+
+          <p class="lume-caption" style="margin-top:1rem; text-align:center;">Protected by enterprise security controls and encrypted sessions.</p>
+        </div>
+      </article>
+    </section>
+  </main>
 </body>
 </html>
