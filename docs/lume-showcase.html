@@ -651,6 +651,7 @@
     <section class="demo-section" id="themes">
       <div class="demo-label">Theme Gallery</div>
       <p class="section-intro">Copy-paste token presets below to quickly restyle Lume in your app. These themes are optional and not bundled with the core library.</p>
+      <div class="demo-row" style="margin-bottom:1rem;"><button type="button" class="lume-btn lume-btn-outline lume-btn-sm" id="theme-reset-showcase">Reset to default</button><span class="mini-muted" id="theme-reset-feedback" aria-live="polite"></span></div>
       <div class="theme-grid">
         <article class="lume-card theme-card">
           <div class="lume-card-body">
@@ -1080,6 +1081,121 @@
         copyThemeCss(button);
       });
     });
+
+    let activeShowcaseThemeVars = new Set();
+    let activeShowcaseApplyButton = null;
+
+    function parseThemeVariables(cssText) {
+      const themeVars = {};
+      cssText.split('\n').forEach(function (line) {
+        const match = line.match(/(--lume-[\w-]+)\s*:\s*([^;]+);/);
+        if (!match) return;
+        themeVars[match[1]] = match[2].trim();
+      });
+      return themeVars;
+    }
+
+    function setShowcaseThemeFeedback(targetId, message) {
+      const feedbackId = targetId.replace('theme-code', 'theme-feedback');
+      const feedbackEl = document.getElementById(feedbackId);
+      if (!feedbackEl) return;
+      feedbackEl.textContent = message;
+      window.setTimeout(function () {
+        if (feedbackEl.textContent === message) feedbackEl.textContent = '';
+      }, 1600);
+    }
+
+    function markActiveApplyButton(button) {
+      if (activeShowcaseApplyButton && activeShowcaseApplyButton !== button) {
+        activeShowcaseApplyButton.textContent = 'Apply';
+      }
+      if (button) {
+        button.textContent = 'Applied';
+        activeShowcaseApplyButton = button;
+      }
+    }
+
+    function applyShowcaseThemeByTarget(targetId, sourceButton) {
+      const codeEl = document.getElementById(targetId);
+      if (!codeEl) return;
+
+      const parsedVars = parseThemeVariables(codeEl.textContent || '');
+      const rootStyle = document.documentElement.style;
+
+      activeShowcaseThemeVars.forEach(function (varName) {
+        rootStyle.removeProperty(varName);
+      });
+
+      activeShowcaseThemeVars = new Set(Object.keys(parsedVars));
+      Object.keys(parsedVars).forEach(function (varName) {
+        rootStyle.setProperty(varName, parsedVars[varName]);
+      });
+
+      markActiveApplyButton(sourceButton || null);
+      setShowcaseThemeFeedback(targetId, 'Theme applied to showcase.');
+
+      try {
+        localStorage.setItem('lume-showcase-theme-target', targetId);
+      } catch (_) {}
+    }
+
+    function resetShowcaseTheme() {
+      const rootStyle = document.documentElement.style;
+      activeShowcaseThemeVars.forEach(function (varName) {
+        rootStyle.removeProperty(varName);
+      });
+      activeShowcaseThemeVars.clear();
+
+      if (activeShowcaseApplyButton) {
+        activeShowcaseApplyButton.textContent = 'Apply';
+        activeShowcaseApplyButton = null;
+      }
+
+      try {
+        localStorage.removeItem('lume-showcase-theme-target');
+      } catch (_) {}
+
+      const resetFeedback = document.getElementById('theme-reset-feedback');
+      if (resetFeedback) {
+        resetFeedback.textContent = 'Reset to default theme.';
+        window.setTimeout(function () {
+          if (resetFeedback.textContent === 'Reset to default theme.') resetFeedback.textContent = '';
+        }, 1600);
+      }
+    }
+
+    function initShowcaseThemeApplyButtons() {
+      document.querySelectorAll('.theme-copy-btn').forEach(function (copyButton) {
+        const targetId = copyButton.getAttribute('data-copy-target');
+        if (!targetId) return;
+
+        const applyButton = document.createElement('button');
+        applyButton.type = 'button';
+        applyButton.className = 'lume-btn lume-btn-primary lume-btn-sm';
+        applyButton.textContent = 'Apply';
+        applyButton.setAttribute('data-apply-target', targetId);
+        copyButton.parentElement.insertBefore(applyButton, copyButton);
+
+        applyButton.addEventListener('click', function () {
+          applyShowcaseThemeByTarget(targetId, applyButton);
+        });
+      });
+
+      const resetButton = document.getElementById('theme-reset-showcase');
+      if (resetButton) {
+        resetButton.addEventListener('click', resetShowcaseTheme);
+      }
+
+      try {
+        const savedTarget = localStorage.getItem('lume-showcase-theme-target');
+        if (!savedTarget) return;
+
+        const savedButton = document.querySelector('[data-apply-target="' + savedTarget + '"]');
+        applyShowcaseThemeByTarget(savedTarget, savedButton || null);
+      } catch (_) {}
+    }
+
+    initShowcaseThemeApplyButtons();
 
     function revealUiWhenReady() {
       const removePending = () => document.documentElement.removeAttribute('data-ui-init');
